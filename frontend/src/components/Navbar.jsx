@@ -11,7 +11,7 @@ const Navbar = () => {
         </h1>
 
         {/* Menu */}
-        <nav className="hidden md:flex gap-8 text-sm font-medium">
+        {/* <nav className="hidden md:flex gap-8 text-sm font-medium">
           <a href="#" className="hover:text-green-400">HOME</a>
           <a href="#">ABOUT</a>
           <a href="#">BOOKING</a>
@@ -19,7 +19,7 @@ const Navbar = () => {
           <a href="#">PAGES</a>
           <a href="#">BLOG</a>
           <a href="#">CONTACT</a>
-        </nav>
+        </nav> */}
 
         {/* Right Side */}
         <div className="hidden md:flex items-center gap-6">

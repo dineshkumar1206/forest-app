@@ -47,11 +47,17 @@ const Services = () => {
   return (
     <div
       ref={sectionRef}
-      className="relative bg-[#f5f5f5] py-20 px-6 overflow-hidden"
+      className="relative bg-[#ffffff] py-15 px-6 overflow-hidden"
     >
       {/* ===== LEFT DOT PATTERN ===== */}
-      <div className="absolute left-0 top-0 w-60 h-full opacity-20 pointer-events-none">
-        <div className="w-full h-full bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:10px_10px]"></div>
+      <div 
+        className="absolute left-0 top-15 w-[45%] md:w-[35%] h-full pointer-events-none opacity-30"
+        style={{
+          maskImage: "linear-gradient(to right, black 0%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to right, black 0%, transparent 100%)"
+        }}
+      >
+        <div className="w-full h-full bg-[radial-gradient(#000_1.5px,transparent_1.5px)] [background-size:14px_14px]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto text-center">

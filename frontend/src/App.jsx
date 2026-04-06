@@ -12,9 +12,9 @@ function App() {
       <Home />
       <Packages />
       <Amenities/>
+      <ForestStayFeatures/>
       <AddOns/>
       <Services/>
-      <ForestStayFeatures/>
       <Footer/>
     </>
   );

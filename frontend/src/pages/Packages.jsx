@@ -45,7 +45,7 @@ const Packages = () => {
   }, []);
 
   return (
-    <div ref={sectionRef} className="bg-[#f5f5f5] py-20 px-6">
+    <div ref={sectionRef} className="bg-[#f5f5f5] py-10 px-6">
       <div className="max-w-7xl mx-auto text-center">
 
         {/* ===== DEALS ===== */}

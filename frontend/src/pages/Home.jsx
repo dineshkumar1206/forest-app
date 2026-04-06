@@ -76,7 +76,7 @@ const Home = () => {
             </p>
 
             {/* BUTTON */}
-            <button
+            {/* <button
               className="border border-yellow-400 px-6 py-3 hover:bg-yellow-500 hover:text-black transition-all duration-500 opacity-0"
               style={{
                 animation: "slideUp 1s ease forwards",
@@ -84,7 +84,7 @@ const Home = () => {
               }}
             >
               Learn More →
-            </button>
+            </button> */}
           </div>
         </div>
 
