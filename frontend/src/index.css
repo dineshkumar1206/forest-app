@@ -40,3 +40,7 @@
 .animate-slideUp {
   animation: slideUp 1s ease forwards;
 }
+
+html, body {
+  overflow-x: hidden;
+}

@@ -63,8 +63,8 @@ const Packages = () => {
             />
           </svg>
 
-          <p className="text-yellow-500 tracking-[4px] text-sm font-semibold uppercase">
-            Deals
+          <p className="text-yellow-500 text-2xl md:text-3xl tracking-[4px] text-sm font-semibold uppercase">
+            Mega Deals
           </p>
 
           <svg className="w-16 h-[10px]" viewBox="0 0 100 10">
@@ -78,13 +78,13 @@ const Packages = () => {
         </div>
 
         {/* ===== HEADING ===== */}
-        <h2
+        {/* <h2
           className={`text-4xl md:text-5xl font-semibold mb-4 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
           }`}
         >
           Super Mega Deals
-        </h2>
+        </h2> */}
 
         {/* ===== DESCRIPTION ===== */}
         <p

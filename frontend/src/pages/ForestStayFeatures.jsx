@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 // --- CHECK ICON ---
 const CheckIcon = () => (
-  <div className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-50 ring-1 ring-emerald-100">
+  <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-50 ring-1 ring-emerald-100">
     <svg
       className="w-3.5 h-3.5 text-emerald-600"
       fill="currentColor"
@@ -19,40 +19,31 @@ const CheckIcon = () => (
 
 // --- FEATURE ITEM ---
 const FeatureItem = ({ children }) => (
-  <li className="flex items-start gap-3 group">
+  <li className="flex items-start gap-4 group">
     <CheckIcon />
-    <span className="text-gray-600 leading-relaxed tracking-[0.01em] group-hover:text-gray-900 transition-colors duration-300">
+    <span className="text-gray-600 text-lg leading-relaxed tracking-[0.01em] group-hover:text-gray-900 transition-colors duration-300">
       {children}
     </span>
   </li>
 );
 
 // --- CARD ---
-const GridCard = ({ image, title, features }) => (
+const GridCard = ({ title, features }) => (
   <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.06)] overflow-hidden hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] hover:-translate-y-2 transition-all duration-500 border border-gray-100 flex flex-col h-full">
     {/* subtle gradient border glow */}
-    <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-transparent group-hover:ring-emerald-200" />
+    <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-transparent group-hover:ring-emerald-200 transition-all duration-500" />
 
-    <div className="relative overflow-hidden">
-      <img
-        src={image}
-        alt={title}
-        className="w-full h-64 object-cover transition-transform duration-700 ease-out hover:scale-[1.04]"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-    </div>
-
-    <div className="p-8 space-y-6">
+    <div className="p-8 sm:p-12 flex flex-col h-full space-y-6">
       {/* Title */}
       <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 tracking-tight leading-snug">
         {title}
       </h3>
 
       {/* Divider */}
-      <div className="h-px w-16 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full" />
+      <div className="h-1 w-16 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full" />
 
       {/* Features */}
-      <ul className="space-y-4">
+      <ul className="space-y-5 flex-grow mt-4">
         {features.map((item, index) => (
           <FeatureItem key={index}>{item}</FeatureItem>
         ))}
@@ -64,7 +55,7 @@ const GridCard = ({ image, title, features }) => (
 // --- ANIMATION ---
 const AnimationWrapper = ({ children, visible, direction }) => (
   <div
-    className={`transition-all duration-1000 transform will-change-transform ${
+    className={`transition-all duration-1000 transform h-full will-change-transform ${
       visible
         ? "opacity-100 translate-x-0"
         : direction === "left"
@@ -105,12 +96,11 @@ export default function ForestStayFeatures() {
   return (
     <section className="bg-gradient-to-b from-white via-gray-50 to-white py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-14 items-stretch">
           {/* FIRST CARD */}
-          <div ref={sec1Ref} className="group">
+          <div ref={sec1Ref} className="group h-full">
             <AnimationWrapper visible={sec1Visible} direction="left">
               <GridCard
-                image="images/istockphoto-1419410282-612x612.jpg"
                 title="Why Forest Stay"
                 features={[
                   "Located inside a beautiful forest in Yelagiri Hills",
@@ -128,10 +118,9 @@ export default function ForestStayFeatures() {
           </div>
 
           {/* SECOND CARD */}
-          <div ref={sec2Ref} className="group">
+          <div ref={sec2Ref} className="group h-full">
             <AnimationWrapper visible={sec2Visible} direction="right">
               <GridCard
-                image="images/istockphoto-1206286319-612x612.jpg"
                 title="Benefits of Eucalyptus Forest Air"
                 features={[
                   "Naturally clears breathing and improves airflow",

@@ -80,8 +80,8 @@ const Services = () => {
             />
           </svg>
 
-          <p className="text-yellow-400 tracking-[4px] text-sm font-semibold uppercase">
-            Services
+          <p className="text-yellow-400 text-2xl md:text-3xl tracking-[4px] text-sm font-semibold uppercase">
+            Our Services
           </p>
 
           {/* Right Zigzag */}
@@ -96,7 +96,7 @@ const Services = () => {
         </div>
 
         {/* ===== HEADING ===== */}
-        <h2
+        {/* <h2
           className={`text-4xl md:text-5xl font-semibold mb-4 transition-all duration-1000 ${
             isVisible
               ? "opacity-100 translate-y-0"
@@ -104,7 +104,7 @@ const Services = () => {
           }`}
         >
           Our Services
-        </h2>
+        </h2> */}
 
         {/* ===== DESCRIPTION ===== */}
         <p

@@ -13,16 +13,56 @@ import { GiCampfire, GiBarbecue } from "react-icons/gi";
 
 const Amenities = () => {
   const amenities = [
-    { title: "Campfire", icon: <GiCampfire /> },
-    { title: "Breakfast", icon: <FaUtensils /> },
-    { title: "BBQ", icon: <GiBarbecue /> },
-    { title: "Open Theater", icon: <FaFilm /> },
-    { title: "Telescope", icon: <FaBinoculars /> },
-    { title: "Scenic Stay", icon: <FaTree /> },
-    { title: "Trampoline", icon: <MdOutlineSportsTennis /> },
-    { title: "Free WiFi", icon: <FaWifi /> },
-    { title: "Viewpoint", icon: <FaTree /> },
-    { title: "Parking", icon: <FaParking /> },
+    { 
+      title: "Campfire", 
+      icon: <GiCampfire />, 
+      description: "Unwind by a cozy campfire during your relaxing evening forest retreat." 
+    },
+    { 
+      title: "Breakfast", 
+      icon: <FaUtensils />, 
+      description: "Wake up to a delicious, freshly prepared breakfast amidst nature's tranquility." 
+    },
+    { 
+      title: "BBQ", 
+      icon: <GiBarbecue />, 
+      description: "Enjoy a sizzling outdoor barbecue experience surrounded by lush woodland scenery." 
+    },
+    { 
+      title: "Open Theater", 
+      icon: <FaFilm />, 
+      description: "Experience unforgettable movie nights under the stars at our open cinema." 
+    },
+    { 
+      title: "Telescope", 
+      icon: <FaBinoculars />, 
+      description: "Stargaze and explore the clear night sky with our premium telescopes." 
+    },
+    { 
+      title: "Scenic Stay", 
+      icon: <FaTree />, 
+      description: "Immerse yourself in nature with our picturesque and tranquil forest accommodations." 
+    },
+    { 
+      title: "Trampoline", 
+      icon: <MdOutlineSportsTennis />, 
+      description: "Enjoy family-friendly fun and endless outdoor entertainment on our safe trampoline." 
+    },
+    { 
+      title: "Free WiFi", 
+      icon: <FaWifi />, 
+      description: "Stay connected with high-speed internet while enjoying your remote wilderness escape." 
+    },
+    { 
+      title: "Viewpoint", 
+      icon: <FaTree />, 
+      description: "Marvel at breathtaking forest panoramas from our designated scenic vantage points." 
+    },
+    { 
+      title: "Parking", 
+      icon: <FaParking />, 
+      description: "Benefit from hassle-free, secure on-site vehicle parking throughout your entire stay." 
+    },
   ];
 
   // ===== SCROLL ANIMATION =====
@@ -69,8 +109,8 @@ const Amenities = () => {
             />
           </svg>
 
-          <p className="text-yellow-500 tracking-[4px] text-sm font-semibold uppercase">
-            Featured
+          <p className="text-yellow-500 text-2xl md:text-3xl  tracking-[4px] text-sm font-semibold uppercase">
+            Amenities at Forest Stay
           </p>
 
           <svg className="w-16 h-[10px]" viewBox="0 0 100 10">
@@ -82,15 +122,6 @@ const Amenities = () => {
             />
           </svg>
         </div>
-
-        {/* ===== HEADING ===== */}
-        <h2
-          className={`text-4xl md:text-5xl font-semibold mb-4 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
-          }`}
-        >
-          Amenities at Forest Stay
-        </h2>
 
         {/* ===== DESCRIPTION ===== */}
         <p
@@ -130,8 +161,9 @@ const Amenities = () => {
                 {item.title}
               </h3>
 
+              {/* DYNAMIC DESCRIPTION */}
               <p className="text-gray-500 text-sm">
-                Enjoy premium facilities during your forest stay experience.
+                {item.description}
               </p>
             </div>
           ))}
