@@ -50,7 +50,7 @@ export default function Footer() {
           {/* ===== TOP: LOGO & SOCIALS ===== */}
           <div className="flex flex-col items-center text-center">
             <MountainIcon />
-            <h2 className="text-3xl font-bold tracking-widest uppercase">Ranger</h2>
+            <h2 className="text-3xl font-bold tracking-widest uppercase">Forest Stay</h2>
             <p className="text-xs tracking-[0.2em] text-gray-300 mt-1 uppercase">
               Park & Camping
             </p>
