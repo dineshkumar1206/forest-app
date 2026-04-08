@@ -1,7 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2/promise");
 const cors = require("cors");
-const twilio = require("twilio");
+// const nodemailer = require("nodemailer"); // Commented out for now
 require("dotenv").config();
 
 const app = express();
@@ -21,28 +21,38 @@ pool.getConnection()
   .then(() => console.log("✅ MySQL Database Connected Successfully"))
   .catch((err) => console.log("❌ MySQL Connection Error:", err));
 
-// --- 2. WHATSAPP SETUP (Twilio) ---
-const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+/* // --- 2. EMAIL SETUP (Nodemailer - For Future Use) ---
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail', 
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS, 
+//   },
+// });
+*/
 
 // --- 3. API ENDPOINT TO HANDLE FORM SUBMISSION ---
 app.post("/api/book", async (req, res) => {
   try {
-    // Removed 'email' from the destructured body
     const { name, phone, adults, kids, checkIn, checkOut } = req.body;
 
-    // A. Save to MySQL Database (Removed email column from query)
+    // A. Save to MySQL Database
     const sqlQuery = `INSERT INTO bookings (name, phone, adults, kids, checkIn, checkOut) VALUES (?, ?, ?, ?, ?, ?)`;
-    await pool.execute(sqlQuery, [name, phone, adults, kids, checkIn, checkOut]);
+    await pool.execute(sqlQuery, [name, phone, adults || 0, kids || 0, checkIn, checkOut]);
 
-    // B. Send WhatsApp to Owner (Using Twilio)
-    await twilioClient.messages.create({
-      body: `🌲 *New Forest Stay Booking*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Dates:* ${checkIn} to ${checkOut}\n*Guests:* ${adults} Adults, ${kids} Kids`,
-      from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`, 
-      to: `whatsapp:+91${phone}` // Adjust this to your actual receiving phone number
-    });
+    /*
+    // B. Send Email to Owner (For Future Use)
+    // const mailOptionsOwner = {
+    //   from: process.env.EMAIL_USER,
+    //   to: process.env.OWNER_EMAIL,
+    //   subject: "🎉 New Booking Request!",
+    //   text: `New booking request from ${name} (${phone}).\nDates: ${checkIn} to ${checkOut}.\nGuests: ${adults} Adults, ${kids} Kids.`
+    // };
+    // await transporter.sendMail(mailOptionsOwner);
+    */
 
     // Success Response
-    res.status(200).json({ success: true, message: "Booking saved and WhatsApp sent!" });
+    res.status(200).json({ success: true, message: "Booking saved to database!" });
 
   } catch (error) {
     console.error("Booking Error:", error);

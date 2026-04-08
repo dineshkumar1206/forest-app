@@ -55,30 +55,62 @@ const Home = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // ✅ HANDLE SUBMIT & WHATSAPP REDIRECT
-  const handleSubmit = (e) => {
+ // ✅ HANDLE SUBMIT & WHATSAPP REDIRECT
+  const handleSubmit = async (e) => { // Make sure this is async
     e.preventDefault();
 
     if (validateForm()) {
-      const whatsappNumber = "919551284478"; 
-      
-      // Build the message string
-      const message = `*New Booking Inquiry*%0A` +
-        `--------------------------%0A` +
-        `*Name:* ${formData.name}%0A` +
-        `*Phone:* ${formData.phone}%0A` +
-        `*Adults:* ${formData.adults || 0}%0A` +
-        `*Kids:* ${formData.kids || 0}%0A` +
-        `*Check-in:* ${formatDate(checkIn)}%0A` +
-        `*Check-out:* ${formatDate(checkOut)}`;
+      // Prepare data for the database
+      const submissionData = {
+        name: formData.name,
+        phone: formData.phone,
+        adults: formData.adults || 0,
+        kids: formData.kids || 0,
+        checkIn: checkIn,
+        checkOut: checkOut,
+      };
 
-      // Create WhatsApp URL
-      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
+      try {
+        // 1. SAVE TO DATABASE FIRST
+        const response = await fetch("http://localhost:5000/api/book", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submissionData),
+        });
 
-      // Open in new tab
-      window.open(whatsappURL, "_blank");
+        const data = await response.json();
 
-      window.location.reload();
+        // 2. IF DATABASE SAVE IS SUCCESSFUL, OPEN WHATSAPP
+        if (data.success) {
+          const whatsappNumber = "919551284478"; 
+          
+          // Build the message string
+          const message = `*New Booking Inquiry*%0A` +
+            `--------------------------%0A` +
+            `*Name:* ${formData.name}%0A` +
+            `*Phone:* ${formData.phone}%0A` +
+            `*Adults:* ${formData.adults || 0}%0A` +
+            `*Kids:* ${formData.kids || 0}%0A` +
+            `*Check-in:* ${formatDate(checkIn)}%0A` +
+            `*Check-out:* ${formatDate(checkOut)}`;
+
+          // Create WhatsApp URL
+          const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+          // Open WhatsApp in new tab
+          window.open(whatsappURL, "_blank");
+
+          // Reload page to clear the form
+          window.location.reload();
+        } else {
+          alert("Error saving booking to database.");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        alert("Failed to connect to the backend server.");
+      }
     }
   };
 
