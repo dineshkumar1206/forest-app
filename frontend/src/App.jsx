@@ -1,3 +1,4 @@
+import FloatingContact from "./components/FloatingContact";
 import Footer from "./components/Footer";
 import AddOns from "./pages/AddOns";
 import Amenities from "./pages/Amenities";
@@ -9,6 +10,7 @@ import Services from "./pages/Servies";
 function App() {
   return (
     <>
+      <FloatingContact/>
       <Home />
       <Packages />
       <Amenities/>

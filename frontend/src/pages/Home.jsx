@@ -1,8 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 
 // ✅ MUI DATE PICKER
-import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -41,11 +40,12 @@ const Home = () => {
 
     if (!formData.name.trim()) newErrors.name = "Name is required.";
     
-    if (!formData.email.trim()) {
+    /* if (!formData.email.trim()) {
       newErrors.email = "Email is required.";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Invalid email format.";
     }
+    */
 
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required.";
@@ -73,7 +73,6 @@ const Home = () => {
       // ✅ LOG TO CONSOLE IF VALID
       const submissionData = {
         name: formData.name,
-        email: formData.email,
         phone: formData.phone,
         checkIn: checkIn ? checkIn.format("YYYY-MM-DD") : null,
         checkOut: checkOut ? checkOut.format("YYYY-MM-DD") : null,
@@ -81,11 +80,6 @@ const Home = () => {
       
       console.log("✅ Form Submitted Successfully!", submissionData);
       alert("Form submitted! Check console for details.");
-      
-      // Optional: Clear form after successful submit
-      // setFormData({ name: "", email: "", phone: "" });
-      // setCheckIn(null);
-      // setCheckOut(null);
     } else {
       console.log("❌ Form Validation Failed", errors);
     }
@@ -135,7 +129,6 @@ const Home = () => {
               className="font-heading text-3xl md:text-4xl lg:text-4xl font-bold tracking-[0.5px] leading-relaxed mb-6 opacity-0 text-center"
               style={{ animation: "slideUp 1s ease forwards", animationDelay: "0.3s" }}
             >
-              <span className="block md:whitespace-nowrap">TAMIL NADU FOREST DEPARTMENT’S</span>
               FOREST STAY <span className="text-yellow-400 text-4xl md:text-5xl">YELAGIRI HILLS</span>
             </h1>
 
@@ -162,10 +155,9 @@ const Home = () => {
                 Book Your Stay
               </h2>
 
-              {/* ✅ ADDED onSubmit HANDLER HERE */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 
-                {/* NAME INPUT */}
+                {/* NAME */}
                 <div>
                   <input
                     type="text"
@@ -173,25 +165,12 @@ const Home = () => {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Full Name"
-                    className={`w-full px-4 py-2 bg-transparent border rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300 ${errors.name ? 'border-red-500' : 'border-white/40'}`}
+                    className={`w-full px-4 py-2 bg-transparent border rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300 ${errors.name ? 'border-red-500' : 'border-white/30'}`}
                   />
-                  {errors.name && <p className="text-red-400 text-xs mt-1 text-left">{errors.name}</p>}
+                  {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
                 </div>
 
-                {/* EMAIL INPUT */}
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email Address"
-                    className={`w-full px-4 py-2 bg-transparent border rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300 ${errors.email ? 'border-red-500' : 'border-white/40'}`}
-                  />
-                  {errors.email && <p className="text-red-400 text-xs mt-1 text-left">{errors.email}</p>}
-                </div>
-
-                {/* PHONE INPUT */}
+                {/* PHONE */}
                 <div>
                   <input
                     type="tel"
@@ -199,15 +178,31 @@ const Home = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="Phone Number"
-                    className={`w-full px-4 py-2 bg-transparent border rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300 ${errors.phone ? 'border-red-500' : 'border-white/40'}`}
+                    className={`w-full px-4 py-2 bg-transparent border rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300 ${errors.phone ? 'border-red-500' : 'border-white/30'}`}
                   />
-                  {errors.phone && <p className="text-red-400 text-xs mt-1 text-left">{errors.phone}</p>}
+                  {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
                 </div>
 
-                {/* MUI DATE PICKERS */}
+                {/* ADULTS & KIDS */}
+                <div className="flex gap-3">
+                  <input
+                    type="number"
+                    name="adults"
+                    placeholder="Adults (13+ years)"
+                    className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
+                  />
+                  <input
+                    type="number"
+                    name="kids"
+                    placeholder="Kids (under 12 years)"
+                    className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
+                  />
+                </div>
+
+                {/* DATE PICKERS */}
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <div className="flex gap-3">
-                    
+
                     {/* CHECK-IN */}
                     <div className="w-1/2">
                       <DatePicker
@@ -215,27 +210,39 @@ const Home = () => {
                         value={checkIn}
                         onChange={(newValue) => {
                           setCheckIn(newValue);
-                          if (errors.checkIn) setErrors(prev => ({...prev, checkIn: ""}));
+                          if (errors.checkIn) setErrors(prev => ({ ...prev, checkIn: "" }));
                         }}
                         slotProps={{
                           textField: {
                             fullWidth: true,
-                            error: !!errors.checkIn, // Show red border if error
+                            error: !!errors.checkIn,
                             sx: {
-                              "& label": { color: errors.checkIn ? "#f87171" : "#fff" },
-                              "& .MuiInputBase-input": { color: "#fff", WebkitTextFillColor: "#fff" },
+                              "& label": { color: "rgba(255,255,255,0.7)" },
+                              "& label.Mui-focused": { color: "#facc15" },
+                              "& .MuiInputBase-input": {
+                                color: "#fff",
+                                WebkitTextFillColor: "#fff", // Forces text color
+                              },
+                              "& .MuiInputBase-input::placeholder": {
+                                color: "rgba(255,255,255,0.5)", // Lightens MM/DD/YYYY
+                                opacity: 1,
+                              },
                               "& .MuiOutlinedInput-root": {
-                                "& fieldset": { borderColor: errors.checkIn ? "#f87171" : "rgba(255,255,255,0.4)" },
-                                "&:hover fieldset": { borderColor: "#facc15" },
+                                backgroundColor: "transparent",
+                                borderRadius: "0.375rem",
+                                color: "#fff",
+                                "& fieldset": {
+                                  borderColor: errors.checkIn ? "#f87171" : "rgba(255,255,255,0.3)",
+                                },
+                                "&:hover fieldset": { borderColor: "rgba(255,255,255,0.6)" },
                                 "&.Mui-focused fieldset": { borderColor: "#facc15" },
                               },
-                              "& .MuiSvgIcon-root": { color: errors.checkIn ? "#f87171" : "#fff" },
+                              "& .MuiSvgIcon-root": { color: "rgba(255,255,255,0.7)" },
                             },
                           },
-                          // ... (kept your existing popper styling)
                         }}
                       />
-                      {errors.checkIn && <p className="text-red-400 text-xs mt-1 text-left">{errors.checkIn}</p>}
+                      {errors.checkIn && <p className="text-red-400 text-xs mt-1">{errors.checkIn}</p>}
                     </div>
 
                     {/* CHECK-OUT */}
@@ -245,37 +252,52 @@ const Home = () => {
                         value={checkOut}
                         onChange={(newValue) => {
                           setCheckOut(newValue);
-                          if (errors.checkOut) setErrors(prev => ({...prev, checkOut: ""}));
+                          if (errors.checkOut) setErrors(prev => ({ ...prev, checkOut: "" }));
                         }}
                         slotProps={{
                           textField: {
                             fullWidth: true,
                             error: !!errors.checkOut,
                             sx: {
-                              "& label": { color: errors.checkOut ? "#f87171" : "#fff" },
-                              "& .MuiInputBase-input": { color: "#fff", WebkitTextFillColor: "#fff" },
+                              "& label": { color: "rgba(255,255,255,0.7)" },
+                              "& label.Mui-focused": { color: "#facc15" },
+                              "& .MuiInputBase-input": {
+                                color: "#fff",
+                                WebkitTextFillColor: "#fff", // Forces text color
+                              },
+                              "& .MuiInputBase-input::placeholder": {
+                                color: "rgba(255,255,255,0.5)", // Lightens MM/DD/YYYY
+                                opacity: 1,
+                              },
                               "& .MuiOutlinedInput-root": {
-                                "& fieldset": { borderColor: errors.checkOut ? "#f87171" : "rgba(255,255,255,0.4)" },
-                                "&:hover fieldset": { borderColor: "#facc15" },
+                                backgroundColor: "transparent",
+                                borderRadius: "0.375rem",
+                                color: "#fff",
+                                "& fieldset": {
+                                  borderColor: errors.checkOut ? "#f87171" : "rgba(255,255,255,0.3)",
+                                },
+                                "&:hover fieldset": { borderColor: "rgba(255,255,255,0.6)" },
                                 "&.Mui-focused fieldset": { borderColor: "#facc15" },
                               },
-                              "& .MuiSvgIcon-root": { color: errors.checkOut ? "#f87171" : "#fff" },
+                              "& .MuiSvgIcon-root": { color: "rgba(255,255,255,0.7)" },
                             },
                           },
                         }}
                       />
-                      {errors.checkOut && <p className="text-red-400 text-xs mt-1 text-left">{errors.checkOut}</p>}
+                      {errors.checkOut && <p className="text-red-400 text-xs mt-1">{errors.checkOut}</p>}
                     </div>
 
                   </div>
                 </LocalizationProvider>
 
+                {/* BUTTON */}
                 <button
                   type="submit"
-                  className="w-full bg-yellow-400 text-black py-2 rounded-md font-semibold hover:bg-yellow-500 transition duration-300"
+                  className="w-full bg-yellow-400 text-black py-2 rounded-md font-semibold hover:bg-yellow-500 transition duration-300 mt-4"
                 >
                   Book Now
                 </button>
+
               </form>
             </div>
           </div>
