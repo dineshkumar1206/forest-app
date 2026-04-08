@@ -3,12 +3,12 @@ import React from "react";
 const Navbar = () => {
   return (
     <header className="absolute top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5 text-white">
+      <div className="max-w-7xl mx-auto flex items-center justify-end px-6 py-5 text-white">
         
         {/* Logo */}
-        <h1 className="text-2xl font-bold tracking-wide">
+        {/* <h1 className="text-2xl font-bold tracking-wide">
           Forest Stay
-        </h1>
+        </h1> */}
 
         {/* Menu */}
         {/* <nav className="hidden md:flex gap-8 text-sm font-medium">

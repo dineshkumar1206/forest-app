@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 
 // --- CHECK ICON ---
 const CheckIcon = () => (
-  <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-50 ring-1 ring-emerald-100">
+  <div className="mt-1 flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-emerald-50 ring-1 ring-emerald-100">
     <svg
-      className="w-3.5 h-3.5 text-emerald-600"
+      className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600"
       fill="currentColor"
       viewBox="0 0 20 20"
     >
@@ -19,9 +19,10 @@ const CheckIcon = () => (
 
 // --- FEATURE ITEM ---
 const FeatureItem = ({ children }) => (
-  <li className="flex items-start gap-4 group">
+  <li className="flex items-start gap-3 sm:gap-4 group">
     <CheckIcon />
-    <span className="text-gray-600 text-lg leading-relaxed tracking-[0.01em] group-hover:text-gray-900 transition-colors duration-300">
+    {/* Reduced text size: text-sm for mobile, text-base for tablet/desktop */}
+    <span className="text-gray-600 text-sm sm:text-base leading-relaxed tracking-[0.01em] group-hover:text-gray-900 transition-colors duration-300">
       {children}
     </span>
   </li>
@@ -33,17 +34,18 @@ const GridCard = ({ title, features }) => (
     {/* subtle gradient border glow */}
     <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-transparent group-hover:ring-emerald-200 transition-all duration-500" />
 
-    <div className="p-8 sm:p-12 flex flex-col h-full space-y-6">
+    <div className="p-6 sm:p-10 flex flex-col h-full space-y-5">
       {/* Title */}
-      <h3 className="text-2xl sm:text-3xl font-semibold text-gray-900 tracking-tight leading-snug">
+      {/* Reduced text size: text-xl for mobile, text-2xl for tablet/desktop */}
+      <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 tracking-tight leading-snug">
         {title}
       </h3>
 
       {/* Divider */}
-      <div className="h-1 w-16 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full" />
+      <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full" />
 
       {/* Features */}
-      <ul className="space-y-5 flex-grow mt-4">
+      <ul className="space-y-4 sm:space-y-5 flex-grow mt-2 sm:mt-4">
         {features.map((item, index) => (
           <FeatureItem key={index}>{item}</FeatureItem>
         ))}
@@ -84,7 +86,8 @@ export default function ForestStayFeatures() {
           }
         });
       },
-      { threshold: 0.3 }
+      // Lowered threshold to 0.05 so it triggers instantly on mobile
+      { threshold: 0.05 }
     );
 
     if (sec1Ref.current) observer.observe(sec1Ref.current);
@@ -94,9 +97,9 @@ export default function ForestStayFeatures() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-b from-white via-gray-50 to-white py-24">
+    <section className="bg-gradient-to-b from-white via-gray-50 to-white py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-14 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-stretch">
           {/* FIRST CARD */}
           <div ref={sec1Ref} className="group h-full">
             <AnimationWrapper visible={sec1Visible} direction="left">

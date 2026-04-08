@@ -34,7 +34,8 @@ const Services = () => {
       ([entry]) => {
         if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.2 }
+      // Lowered threshold to 0.05 so it triggers reliably on mobile screens
+      { threshold: 0.05 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -64,14 +65,14 @@ const Services = () => {
 
         {/* ===== HEADER (ZIGZAG) ===== */}
         <div
-          className={`flex items-center justify-center gap-4 mb-4 transition-all duration-1000 ${
+          className={`flex items-center justify-center gap-2 md:gap-4 mb-4 transition-all duration-1000 ${
             isVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-20"
           }`}
         >
           {/* Left Zigzag */}
-          <svg className="w-16 h-[10px]" viewBox="0 0 100 10">
+          <svg className="w-12 md:w-16 h-[10px]" viewBox="0 0 100 10">
             <polyline
               points="0,10 20,0 40,10 60,0 80,10 100,0"
               fill="none"
@@ -80,12 +81,12 @@ const Services = () => {
             />
           </svg>
 
-          <p className="text-yellow-400 text-2xl md:text-3xl tracking-[4px] text-sm font-semibold uppercase">
+          <p className="text-yellow-400 text-lg md:text-3xl tracking-[2px] md:tracking-[4px] font-semibold uppercase">
             Our Services
           </p>
 
           {/* Right Zigzag */}
-          <svg className="w-16 h-[10px]" viewBox="0 0 100 10">
+          <svg className="w-12 md:w-16 h-[10px]" viewBox="0 0 100 10">
             <polyline
               points="0,0 20,10 40,0 60,10 80,0 100,10"
               fill="none"
@@ -95,20 +96,9 @@ const Services = () => {
           </svg>
         </div>
 
-        {/* ===== HEADING ===== */}
-        {/* <h2
-          className={`text-4xl md:text-5xl font-semibold mb-4 transition-all duration-1000 ${
-            isVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-20"
-          }`}
-        >
-          Our Services
-        </h2> */}
-
         {/* ===== DESCRIPTION ===== */}
-        <p
-          className={`text-gray-600 max-w-2xl mx-auto mb-12 transition-all duration-1000 ${
+        {/* <p
+          className={`text-gray-600 max-w-2xl mx-auto mb-10 md:mb-12 transition-all duration-1000 text-sm md:text-base ${
             isVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-20"
@@ -116,14 +106,16 @@ const Services = () => {
           style={{ transitionDelay: "200ms" }}
         >
           Nullam semper etiam congue lacinia nuncesit quam vel vestibulum faucibus dolor non semper leo quis pretium quam lacus.
-        </p>
+        </p> */}
 
         {/* ===== CARDS ===== */}
-        <div className="grid md:grid-cols-4 gap-8">
+        {/* Adjusted grid for mobile (1 col), tablet (2 cols), and desktop (4 cols) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 justify-items-center">
           {services.map((item, index) => (
             <div
               key={index}
-              className={`relative group overflow-hidden rounded-xl shadow-md transition-all duration-700 ${
+              // Added max-w-[320px] for mobile/tablet, removing restriction on large screens
+              className={`w-full max-w-[320px] lg:max-w-none relative group overflow-hidden rounded-xl shadow-md transition-all duration-700 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-20"
@@ -131,10 +123,11 @@ const Services = () => {
               style={{ transitionDelay: `${index * 150}ms` }}
             >
               {/* IMAGE */}
+              {/* Responsive heights: h-56 (mobile), h-64 (tablet), h-72 (desktop) */}
               <img
                 src={item.img}
                 alt={item.title}
-                className="w-full h-70 object-cover transform group-hover:scale-110 transition duration-700"
+                className="w-full h-56 sm:h-64 lg:h-72 object-cover transform group-hover:scale-110 transition duration-700"
               />
 
               {/* DARK OVERLAY */}

@@ -63,7 +63,7 @@ const Packages = () => {
             />
           </svg>
 
-          <p className="text-yellow-500 text-2xl md:text-3xl tracking-[4px] text-sm font-semibold uppercase">
+          <p className="text-yellow-500 text-2xl md:text-3xl tracking-[4px] font-semibold uppercase">
             Mega Deals
           </p>
 
@@ -77,15 +77,6 @@ const Packages = () => {
           </svg>
         </div>
 
-        {/* ===== HEADING ===== */}
-        {/* <h2
-          className={`text-4xl md:text-5xl font-semibold mb-4 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
-          }`}
-        >
-          Super Mega Deals
-        </h2> */}
-
         {/* ===== DESCRIPTION ===== */}
         <p
           className={`text-gray-600 max-w-2xl mx-auto mb-12 transition-all duration-1000 ${
@@ -98,11 +89,16 @@ const Packages = () => {
         </p>
 
         {/* ===== CARDS ===== */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Changed from grid to flex layout.
+          flex-col for mobile, md:flex-row for desktop.
+          justify-center clusters them in the middle.
+          md:gap-6 reduces the gap on desktop compared to a full-width grid.
+        */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-6">
           {packages.map((item, index) => (
             <div
               key={index}
-              className={`bg-white rounded-lg overflow-hidden shadow-md group transition-all duration-700 hover:-translate-y-3 hover:shadow-xl ${
+              className={`w-full max-w-[320px] bg-white rounded-lg overflow-hidden shadow-md group transition-all duration-700 hover:-translate-y-3 hover:shadow-xl ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-20"
@@ -116,12 +112,12 @@ const Packages = () => {
                 <img
                   src={item.img}
                   alt={item.title}
-                  className="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500"
+                  className="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500"
                 />
               </div>
 
               {/* CONTENT */}
-              <div className="p-5 text-left">
+              <div className="p-4 text-left">
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-lg font-semibold">
                     {item.title}
@@ -145,7 +141,7 @@ const Packages = () => {
                 </div>
 
                 {/* BUTTON */}
-                <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300 w-full">
+                <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300 w-full text-sm">
                   View Offer »
                 </button>
               </div>

@@ -76,7 +76,9 @@ const Amenities = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      // Lowered threshold to 0.05 so the animation triggers almost immediately 
+      // when the section enters the viewport, especially helpful for tall mobile sections.
+      { threshold: 0.05 } 
     );
 
     if (sectionRef.current) {
@@ -96,11 +98,11 @@ const Amenities = () => {
 
         {/* ===== TITLE ===== */}
         <div
-          className={`flex items-center justify-center gap-4 mb-4 transition-all duration-1000 ${
+          className={`flex items-center justify-center gap-2 md:gap-4 mb-4 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-20"
           }`}
         >
-          <svg className="w-16 h-[10px]" viewBox="0 0 100 10">
+          <svg className="w-12 md:w-16 h-[10px]" viewBox="0 0 100 10">
             <polyline
               points="0,10 20,0 40,10 60,0 80,10 100,0"
               fill="none"
@@ -109,11 +111,11 @@ const Amenities = () => {
             />
           </svg>
 
-          <p className="text-yellow-500 text-2xl md:text-3xl  tracking-[4px] text-sm font-semibold uppercase">
+          <p className="text-yellow-500 text-lg md:text-3xl tracking-[2px] md:tracking-[4px] font-semibold uppercase text-center">
             Amenities at Forest Stay
           </p>
 
-          <svg className="w-16 h-[10px]" viewBox="0 0 100 10">
+          <svg className="w-12 md:w-16 h-[10px]" viewBox="0 0 100 10">
             <polyline
               points="0,0 20,10 40,0 60,10 80,0 100,10"
               fill="none"
@@ -125,7 +127,7 @@ const Amenities = () => {
 
         {/* ===== DESCRIPTION ===== */}
         <p
-          className={`text-gray-600 max-w-2xl mx-auto mb-12 transition-all duration-1000 ${
+          className={`text-gray-600 max-w-2xl mx-auto mb-12 transition-all duration-1000 text-sm md:text-base ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
           }`}
           style={{ transitionDelay: "200ms" }}
@@ -135,11 +137,13 @@ const Amenities = () => {
         </p>
 
         {/* ===== GRID ===== */}
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        {/* Changed to grid-cols-2 for mobile base, adjusting gap for smaller screens */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
           {amenities.map((item, index) => (
             <div
               key={index}
-              className={`border border-dashed border-gray-300 p-6 rounded-lg text-center bg-white hover:shadow-lg transition-all duration-700 hover:-translate-y-2 ${
+              // Reduced mobile padding (p-4) to fit 2 columns better, desktop stays p-6
+              className={`border border-dashed border-gray-300 p-4 md:p-6 rounded-lg text-center bg-white hover:shadow-lg transition-all duration-700 hover:-translate-y-2 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : `opacity-0 ${
@@ -153,16 +157,16 @@ const Amenities = () => {
               }}
             >
               {/* ICON */}
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-yellow-200 flex items-center justify-center text-2xl text-gray-800">
+              <div className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 rounded-full bg-yellow-200 flex items-center justify-center text-xl md:text-2xl text-gray-800">
                 {item.icon}
               </div>
 
-              <h3 className="font-semibold text-lg mb-2">
+              <h3 className="font-semibold text-base md:text-lg mb-2">
                 {item.title}
               </h3>
 
               {/* DYNAMIC DESCRIPTION */}
-              <p className="text-gray-500 text-sm">
+              <p className="text-gray-500 text-xs md:text-sm">
                 {item.description}
               </p>
             </div>

@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 
-// ✅ MUI DATE PICKER
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
 const Home = () => {
   // ✅ DATE STATE
-  const [checkIn, setCheckIn] = useState(null);
-  const [checkOut, setCheckOut] = useState(null);
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
 
-  // ✅ TEXT INPUT STATE
+  // ✅ TEXT INPUT STATE (Added adults and kids here)
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     phone: "",
+    adults: "",
+    kids: "",
   });
 
   // ✅ ERROR STATE
   const [errors, setErrors] = useState({});
+
+  // ✅ HELPER TO FORMAT DATE TO DD/MM/YYYY
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
 
   // ✅ HANDLE INPUT CHANGES
   const handleChange = (e) => {
@@ -28,7 +31,6 @@ const Home = () => {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -37,51 +39,46 @@ const Home = () => {
   // ✅ VALIDATION LOGIC
   const validateForm = () => {
     let newErrors = {};
-
     if (!formData.name.trim()) newErrors.name = "Name is required.";
-    
-    /* if (!formData.email.trim()) {
-      newErrors.email = "Email is required.";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Invalid email format.";
-    }
-    */
-
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required.";
     } else if (!/^\d{10}$/.test(formData.phone.replace(/[-+()\s]/g, ''))) {
       newErrors.phone = "Enter a valid 10-digit phone number.";
     }
-
     if (!checkIn) newErrors.checkIn = "Check-in date is required.";
-    
     if (!checkOut) {
       newErrors.checkOut = "Check-out date is required.";
-    } else if (checkIn && checkOut.isBefore(checkIn, "day")) {
+    } else if (checkIn && new Date(checkOut) <= new Date(checkIn)) {
       newErrors.checkOut = "Check-out must be after Check-in.";
     }
-
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Returns true if no errors
+    return Object.keys(newErrors).length === 0;
   };
 
-  // ✅ HANDLE SUBMIT
+  // ✅ HANDLE SUBMIT & WHATSAPP REDIRECT
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents page reload
+    e.preventDefault();
 
     if (validateForm()) {
-      // ✅ LOG TO CONSOLE IF VALID
-      const submissionData = {
-        name: formData.name,
-        phone: formData.phone,
-        checkIn: checkIn ? checkIn.format("YYYY-MM-DD") : null,
-        checkOut: checkOut ? checkOut.format("YYYY-MM-DD") : null,
-      };
+      const whatsappNumber = "919551284478"; 
       
-      console.log("✅ Form Submitted Successfully!", submissionData);
-      alert("Form submitted! Check console for details.");
-    } else {
-      console.log("❌ Form Validation Failed", errors);
+      // Build the message string
+      const message = `*New Booking Inquiry*%0A` +
+        `--------------------------%0A` +
+        `*Name:* ${formData.name}%0A` +
+        `*Phone:* ${formData.phone}%0A` +
+        `*Adults:* ${formData.adults || 0}%0A` +
+        `*Kids:* ${formData.kids || 0}%0A` +
+        `*Check-in:* ${formatDate(checkIn)}%0A` +
+        `*Check-out:* ${formatDate(checkOut)}`;
+
+      // Create WhatsApp URL
+      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+      // Open in new tab
+      window.open(whatsappURL, "_blank");
+
+      window.location.reload();
     }
   };
 
@@ -183,117 +180,85 @@ const Home = () => {
                   {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
                 </div>
 
-                {/* ADULTS & KIDS */}
+               {/* ADULTS & KIDS */}
+               <div className="flex gap-3">
+                 <input
+                   type="number"
+                   name="adults"
+                   value={formData.adults}
+                   onChange={handleChange} 
+                   placeholder="Adults (13+ years)"
+                   className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
+                 />
+                 <input
+                   type="number"
+                   name="kids"
+                   value={formData.kids} 
+                   onChange={handleChange} 
+                   placeholder="Kids (under 12 years)"
+                   className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
+                 />
+               </div>
+
+                {/* CUSTOM DATE PICKERS WITH DD/MM/YYYY */}
                 <div className="flex gap-3">
-                  <input
-                    type="number"
-                    name="adults"
-                    placeholder="Adults (13+ years)"
-                    className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
-                  />
-                  <input
-                    type="number"
-                    name="kids"
-                    placeholder="Kids (under 12 years)"
-                    className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
-                  />
-                </div>
-
-                {/* DATE PICKERS */}
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <div className="flex gap-3">
-
-                    {/* CHECK-IN */}
-                    <div className="w-1/2">
-                      <DatePicker
-                        label="Check In"
+                  {/* CHECK-IN */}
+                  <div className="w-1/2 relative group">
+                    <label className="text-xs text-white/70 mb-1 block pl-1">Check In</label>
+                    <div className={`relative flex items-center w-full px-4 py-2 bg-transparent border rounded-md group-focus-within:border-yellow-400 transition-colors ${errors.checkIn ? 'border-red-500' : 'border-white/30'}`}>
+                      {/* Fake Display Text */}
+                      <span className={`flex-1 ${checkIn ? 'text-white' : 'text-gray-300'}`}>
+                        {checkIn ? formatDate(checkIn) : "DD/MM/YYYY"}
+                      </span>
+                      {/* Calendar Icon */}
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white/70">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                      </svg>
+                      {/* Invisible Native Input Overlay */}
+                      <input
+                        type="date"
                         value={checkIn}
-                        onChange={(newValue) => {
-                          setCheckIn(newValue);
-                          if (errors.checkIn) setErrors(prev => ({ ...prev, checkIn: "" }));
+                        onChange={(e) => {
+                          setCheckIn(e.target.value);
+                          if (errors.checkIn) setErrors((prev) => ({ ...prev, checkIn: "" }));
                         }}
-                        slotProps={{
-                          textField: {
-                            fullWidth: true,
-                            error: !!errors.checkIn,
-                            sx: {
-                              "& label": { color: "rgba(255,255,255,0.7)" },
-                              "& label.Mui-focused": { color: "#facc15" },
-                              "& .MuiInputBase-input": {
-                                color: "#fff",
-                                WebkitTextFillColor: "#fff", // Forces text color
-                              },
-                              "& .MuiInputBase-input::placeholder": {
-                                color: "rgba(255,255,255,0.5)", // Lightens MM/DD/YYYY
-                                opacity: 1,
-                              },
-                              "& .MuiOutlinedInput-root": {
-                                backgroundColor: "transparent",
-                                borderRadius: "0.375rem",
-                                color: "#fff",
-                                "& fieldset": {
-                                  borderColor: errors.checkIn ? "#f87171" : "rgba(255,255,255,0.3)",
-                                },
-                                "&:hover fieldset": { borderColor: "rgba(255,255,255,0.6)" },
-                                "&.Mui-focused fieldset": { borderColor: "#facc15" },
-                              },
-                              "& .MuiSvgIcon-root": { color: "rgba(255,255,255,0.7)" },
-                            },
-                          },
-                        }}
+                        className="date-overlay absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       />
-                      {errors.checkIn && <p className="text-red-400 text-xs mt-1">{errors.checkIn}</p>}
                     </div>
-
-                    {/* CHECK-OUT */}
-                    <div className="w-1/2">
-                      <DatePicker
-                        label="Check Out"
-                        value={checkOut}
-                        onChange={(newValue) => {
-                          setCheckOut(newValue);
-                          if (errors.checkOut) setErrors(prev => ({ ...prev, checkOut: "" }));
-                        }}
-                        slotProps={{
-                          textField: {
-                            fullWidth: true,
-                            error: !!errors.checkOut,
-                            sx: {
-                              "& label": { color: "rgba(255,255,255,0.7)" },
-                              "& label.Mui-focused": { color: "#facc15" },
-                              "& .MuiInputBase-input": {
-                                color: "#fff",
-                                WebkitTextFillColor: "#fff", // Forces text color
-                              },
-                              "& .MuiInputBase-input::placeholder": {
-                                color: "rgba(255,255,255,0.5)", // Lightens MM/DD/YYYY
-                                opacity: 1,
-                              },
-                              "& .MuiOutlinedInput-root": {
-                                backgroundColor: "transparent",
-                                borderRadius: "0.375rem",
-                                color: "#fff",
-                                "& fieldset": {
-                                  borderColor: errors.checkOut ? "#f87171" : "rgba(255,255,255,0.3)",
-                                },
-                                "&:hover fieldset": { borderColor: "rgba(255,255,255,0.6)" },
-                                "&.Mui-focused fieldset": { borderColor: "#facc15" },
-                              },
-                              "& .MuiSvgIcon-root": { color: "rgba(255,255,255,0.7)" },
-                            },
-                          },
-                        }}
-                      />
-                      {errors.checkOut && <p className="text-red-400 text-xs mt-1">{errors.checkOut}</p>}
-                    </div>
-
+                    {errors.checkIn && <p className="text-red-400 text-xs mt-1">{errors.checkIn}</p>}
                   </div>
-                </LocalizationProvider>
+
+                  {/* CHECK-OUT */}
+                  <div className="w-1/2 relative group">
+                    <label className="text-xs text-white/70 mb-1 block pl-1">Check Out</label>
+                    <div className={`relative flex items-center w-full px-4 py-2 bg-transparent border rounded-md group-focus-within:border-yellow-400 transition-colors ${errors.checkOut ? 'border-red-500' : 'border-white/30'}`}>
+                      {/* Fake Display Text */}
+                      <span className={`flex-1 ${checkOut ? 'text-white' : 'text-gray-300'}`}>
+                        {checkOut ? formatDate(checkOut) : "DD/MM/YYYY"}
+                      </span>
+                      {/* Calendar Icon */}
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white/70">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                      </svg>
+                      {/* Invisible Native Input Overlay */}
+                      <input
+                        type="date"
+                        value={checkOut}
+                        onChange={(e) => {
+                          setCheckOut(e.target.value);
+                          if (errors.checkOut) setErrors((prev) => ({ ...prev, checkOut: "" }));
+                        }}
+                        className="date-overlay absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      />
+                    </div>
+                    {errors.checkOut && <p className="text-red-400 text-xs mt-1">{errors.checkOut}</p>}
+                  </div>
+                </div>
 
                 {/* BUTTON */}
                 <button
                   type="submit"
-                  className="w-full bg-yellow-400 text-black py-2 rounded-md font-semibold hover:bg-yellow-500 transition duration-300 mt-4"
+                  className="w-full cursor-pointer bg-yellow-400 text-black py-2 rounded-md font-semibold hover:bg-yellow-500 transition duration-300 mt-4"
                 >
                   Book Now
                 </button>
@@ -303,7 +268,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ANIMATIONS */}
+        {/* ANIMATIONS & CUSTOM DATE CSS */}
         <style>
           {`
             @keyframes slideDown {
@@ -313,6 +278,16 @@ const Home = () => {
             @keyframes slideUp {
               from { opacity: 0; transform: translateY(80px); }
               to { opacity: 1; transform: translateY(0); }
+            }
+            /* Stretches the clickable area of the date picker over the whole hidden input */
+            .date-overlay::-webkit-calendar-picker-indicator {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+              cursor: pointer;
             }
           `}
         </style>
