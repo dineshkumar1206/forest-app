@@ -3,20 +3,21 @@ import React, { useEffect, useRef, useState } from "react";
 const Packages = () => {
   const packages = [
     {
-      title: "Camping in Hills",
-      price: "₹7,999",
+      title: "BYOT",
+      price: "₹2000",
       img: "/images/packages1.jpg",
     },
     {
-      title: "Lake Side Camping",
-      price: "₹6,499",
-      img: "/images/packages2.jpg",
-    },
-    {
-      title: "Forest Adventure Camp",
-      price: "₹8,999",
+      title: "Tent Stay",
+      price: "₹2,500",
       img: "/images/packages3.jpg",
     },
+    {
+      title: "Room Stay",
+      price: "₹3000",
+      img: "/images/packages2.jpg",
+    }
+    
   ];
 
   // ===== SCROLL ANIMATION =====
@@ -132,17 +133,52 @@ const Packages = () => {
                 </p>
 
                 {/* REVIEWS */}
-                <div className="flex items-center justify-between mb-4">
+                {/* <div className="flex items-center justify-between mb-4">
                   <span className="text-yellow-400 text-sm">★★★★★</span>
                   <span className="text-gray-400 text-sm">
                     104 Reviews
                   </span>
-                </div>
+                </div> */}
 
                 {/* BUTTON */}
-                <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300 w-full text-sm">
-                  View Offer »
-                </button>
+               <button
+               onClick={() => {
+                 const section = document.getElementById("booking-form");
+                 if (!section) return;
+             
+                 const targetPosition =
+                   section.getBoundingClientRect().top + window.pageYOffset - 20; // slight offset
+             
+                 const startPosition = window.pageYOffset;
+                 const distance = targetPosition - startPosition;
+                 const duration = 1400; // 👈 increase = smoother (try 1000–1400)
+             
+                 let start = null;
+             
+                 const easeInOutCubic = (t) =>
+                   t < 0.5
+                     ? 4 * t * t * t
+                     : 1 - Math.pow(-2 * t + 2, 3) / 2;
+             
+                 const animation = (currentTime) => {
+                   if (!start) start = currentTime;
+                   const timeElapsed = currentTime - start;
+                   const progress = Math.min(timeElapsed / duration, 1);
+             
+                   const ease = easeInOutCubic(progress);
+                   window.scrollTo(0, startPosition + distance * ease);
+             
+                   if (timeElapsed < duration) {
+                     requestAnimationFrame(animation);
+                   }
+                 };
+             
+                 requestAnimationFrame(animation);
+               }}
+               className="bg-green-600 cursor-pointer text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300 w-full text-sm"
+             >
+               Book Now »
+             </button>
               </div>
             </div>
           ))}

@@ -12,6 +12,7 @@ const Home = () => {
     phone: "",
     adults: "",
     kids: "",
+    packages:[],
   });
 
   // ✅ ERROR STATE
@@ -54,6 +55,21 @@ const Home = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+        //  Check if the package is already selected, if not add it, if yes remove it
+  const handlePackageChange = (e) => {
+  const { value, checked } = e.target;
+
+  setFormData((prev) => {
+    if (checked) {
+      return { ...prev, packages: [...prev.packages, value] };
+    } else {
+      return {
+        ...prev,
+        packages: prev.packages.filter((pkg) => pkg !== value),
+      };
+    }
+  });
+};
 
  // ✅ HANDLE SUBMIT & WHATSAPP REDIRECT
   const handleSubmit = async (e) => { // Make sure this is async
@@ -68,6 +84,7 @@ const Home = () => {
         kids: formData.kids || 0,
         checkIn: checkIn,
         checkOut: checkOut,
+        packages: formData.packages,
       };
 
       try {
@@ -93,6 +110,7 @@ const Home = () => {
             `*Phone:* ${formData.phone}%0A` +
             `*Adults:* ${formData.adults || 0}%0A` +
             `*Kids:* ${formData.kids || 0}%0A` +
+            `*Packages:* ${formData.packages.join(", ") || "None"}%0A` +
             `*Check-in:* ${formatDate(checkIn)}%0A` +
             `*Check-out:* ${formatDate(checkOut)}`;
 
@@ -175,6 +193,7 @@ const Home = () => {
 
           {/* RIGHT SIDE FORM */}
           <div
+            id="booking-form"
             className="w-full max-w-md opacity-0"
             style={{ animation: "slideUp 1s ease forwards", animationDelay: "0.7s" }}
           >
@@ -231,6 +250,38 @@ const Home = () => {
                    className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
                  />
                </div>
+
+            {/* PACKAGES */}
+<div>
+  <p className="text-sm mb-3 text-white/80">Select Package</p>
+
+  <div className="flex gap-3 flex-wrap">
+    {["BYOT", "Tent Stay", "Room Stay"].map((pkg) => {
+      const isSelected = formData.packages.includes(pkg);
+
+      return (
+        <label
+          key={pkg}
+          className={`cursor-pointer px-4 py-2 rounded-full border text-sm transition-all duration-300 
+          ${
+            isSelected
+              ? "bg-yellow-400 text-black border-yellow-400 shadow-md"
+              : "border-white/30 text-white hover:border-yellow-400 hover:text-yellow-400"
+          }`}
+        >
+          <input
+            type="checkbox"
+            value={pkg}
+            onChange={handlePackageChange}
+            checked={isSelected}
+            className="hidden"
+          />
+          {pkg}
+        </label>
+      );
+    })}
+  </div>
+</div>
 
                 {/* CUSTOM DATE PICKERS WITH DD/MM/YYYY */}
                 <div className="flex gap-3">

@@ -5,18 +5,20 @@ import Amenities from "./pages/Amenities";
 import ForestStayFeatures from "./pages/ForestStayFeatures";
 import Home from "./pages/Home";
 import Packages from "./pages/Packages";
-import Services from "./pages/Servies";
+import Testimonials from "./pages/Testimonials";
+// import Services from "./pages/Servies";
 
 function App() {
   return (
     <>
       <FloatingContact/>
       <Home />
-      <Packages />
       <Amenities/>
+      <Packages />
       <ForestStayFeatures/>
       <AddOns/>
       {/* <Services/> */}
+      <Testimonials/>
       <Footer/>
     </>
   );

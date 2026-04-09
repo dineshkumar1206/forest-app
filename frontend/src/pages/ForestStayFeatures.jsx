@@ -99,12 +99,10 @@ export default function ForestStayFeatures() {
                 features={[
                   "Located inside a beautiful forest in Yelagiri Hills",
                   "Situated at a stunning sunset viewpoint",
-                  "Infinity views of towns, highways, lakes, railways & Hills",
                   "Private balconies with valley & skyline view",
                   "Open-air theatre with panoramic scenery",
                   "Campfire nights in a peaceful forest setting",
                   "Family & group friendly private stay",
-                  "Easy access yet completely close to nature",
                   "Surrounded by the fresh fragrance of eucalyptus trees",
                 ]}
               />
