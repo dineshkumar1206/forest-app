@@ -1,27 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
+import { FaTree } from "react-icons/fa";
 
 // --- CHECK ICON ---
 const CheckIcon = () => (
-  <div className="mt-1 flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-emerald-50 ring-1 ring-emerald-100">
-    <svg
-      className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-    >
-      <path
-        fillRule="evenodd"
-        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-        clipRule="evenodd"
-      />
-    </svg>
+  <div className="mt-1 flex h-4 w-4 sm:h-5 sm:w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 ring-1 ring-emerald-100 text-emerald-600 text-[10px] sm:text-xs">
+    <FaTree />
   </div>
 );
 
 // --- FEATURE ITEM ---
 const FeatureItem = ({ children }) => (
-  <li className="flex items-start gap-3 sm:gap-4 group">
+  <li className="flex items-start gap-2 sm:gap-3 group">
     <CheckIcon />
-    {/* Reduced text size: text-sm for mobile, text-base for tablet/desktop */}
     <span className="text-gray-600 text-sm sm:text-base leading-relaxed tracking-[0.01em] group-hover:text-gray-900 transition-colors duration-300">
       {children}
     </span>
@@ -30,22 +20,23 @@ const FeatureItem = ({ children }) => (
 
 // --- CARD ---
 const GridCard = ({ title, features }) => (
-  <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.06)] overflow-hidden hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] hover:-translate-y-2 transition-all duration-500 border border-gray-100 flex flex-col h-full">
+  <div className="relative bg-white/80 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.05)] overflow-hidden hover:shadow-[0_15px_40px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-500 border border-gray-100 flex flex-col h-full">
+    
     {/* subtle gradient border glow */}
-    <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-transparent group-hover:ring-emerald-200 transition-all duration-500" />
+    <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-transparent group-hover:ring-emerald-200 transition-all duration-500" />
 
-    <div className="p-6 sm:p-10 flex flex-col h-full space-y-5">
+    <div className="p-5 sm:p-6 flex flex-col h-full space-y-4">
+      
       {/* Title */}
-      {/* Reduced text size: text-xl for mobile, text-2xl for tablet/desktop */}
-      <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 tracking-tight leading-snug">
+      <h3 className="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight leading-snug">
         {title}
       </h3>
 
       {/* Divider */}
-      <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full" />
+      <div className="h-1 w-10 sm:w-14 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full" />
 
       {/* Features */}
-      <ul className="space-y-4 sm:space-y-5 flex-grow mt-2 sm:mt-4">
+      <ul className="space-y-3 sm:space-y-4 flex-grow mt-2">
         {features.map((item, index) => (
           <FeatureItem key={index}>{item}</FeatureItem>
         ))}
@@ -61,8 +52,8 @@ const AnimationWrapper = ({ children, visible, direction }) => (
       visible
         ? "opacity-100 translate-x-0"
         : direction === "left"
-        ? "opacity-0 -translate-x-16"
-        : "opacity-0 translate-x-16"
+        ? "opacity-0 -translate-x-12"
+        : "opacity-0 translate-x-12"
     }`}
   >
     {children}
@@ -86,7 +77,6 @@ export default function ForestStayFeatures() {
           }
         });
       },
-      // Lowered threshold to 0.05 so it triggers instantly on mobile
       { threshold: 0.05 }
     );
 
@@ -97,9 +87,10 @@ export default function ForestStayFeatures() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-b from-white via-gray-50 to-white py-16 sm:py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14 items-stretch">
+    <section className="bg-gradient-to-b from-white via-gray-50 to-white py-14 sm:py-20">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 items-stretch">
+          
           {/* FIRST CARD */}
           <div ref={sec1Ref} className="group h-full">
             <AnimationWrapper visible={sec1Visible} direction="left">
@@ -137,6 +128,7 @@ export default function ForestStayFeatures() {
               />
             </AnimationWrapper>
           </div>
+
         </div>
       </div>
     </section>

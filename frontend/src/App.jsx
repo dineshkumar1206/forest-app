@@ -16,7 +16,7 @@ function App() {
       <Amenities/>
       <ForestStayFeatures/>
       <AddOns/>
-      <Services/>
+      {/* <Services/> */}
       <Footer/>
     </>
   );

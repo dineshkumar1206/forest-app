@@ -138,7 +138,7 @@ export default function Footer() {
           {/* ===== COPYRIGHT ===== */}
           {/* Reduced margin and padding: mt-16 pt-6 -> mt-8 pt-4 md:mt-10 md:pt-5 */}
           <div className="text-center mt-8 md:mt-10 pt-4 md:pt-5 border-t border-gray-500/30 text-gray-400 text-[10px] md:text-xs">
-            © 2026 Forest Stay. All rights reserved. Designed by AmigoWebster
+            © 2026 Forest Stay. All rights reserved. Designed by <a href="https://amigowebster.com" target="_blank" rel="noopener noreferrer" className="text-yellow-400 hover:underline">amigowebster</a>
           </div>
 
         </div>

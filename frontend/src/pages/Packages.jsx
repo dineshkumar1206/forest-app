@@ -64,7 +64,7 @@ const Packages = () => {
           </svg>
 
           <p className="text-yellow-500 text-2xl md:text-3xl tracking-[4px] font-semibold uppercase">
-            Mega Deals
+            Our Packages
           </p>
 
           <svg className="w-16 h-[10px]" viewBox="0 0 100 10">
@@ -84,8 +84,7 @@ const Packages = () => {
           }`}
           style={{ transitionDelay: "200ms" }}
         >
-          Discover the best camping experiences with our exclusive packages
-          designed for adventure lovers.
+          Explore our handpicked selection of premium outdoor stays tailored for every type of traveler.
         </p>
 
         {/* ===== CARDS ===== */}

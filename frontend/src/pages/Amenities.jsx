@@ -7,6 +7,7 @@ import {
   FaTree,
   FaFilm,
   FaBinoculars,
+  FaMountain
 } from "react-icons/fa";
 import { MdOutlineSportsTennis } from "react-icons/md";
 import { GiCampfire, GiBarbecue } from "react-icons/gi";
@@ -14,22 +15,27 @@ import { GiCampfire, GiBarbecue } from "react-icons/gi";
 const Amenities = () => {
   const amenities = [
     { 
+      title: "Scenic Stay", 
+      icon: <FaTree />, 
+      description: "Immerse yourself in nature with our picturesque and tranquil forest accommodations." 
+    },
+    { 
       title: "Campfire", 
       icon: <GiCampfire />, 
       description: "Unwind by a cozy campfire during your relaxing evening forest retreat." 
     },
+    // { 
+    //   title: "Breakfast", 
+    //   icon: <FaUtensils />, 
+    //   description: "Wake up to a delicious, freshly prepared breakfast amidst nature's tranquility." 
+    // },
+    // { 
+    //   title: "BBQ", 
+    //   icon: <GiBarbecue />, 
+    //   description: "Enjoy a sizzling outdoor barbecue experience surrounded by lush woodland scenery." 
+    // },
     { 
-      title: "Breakfast", 
-      icon: <FaUtensils />, 
-      description: "Wake up to a delicious, freshly prepared breakfast amidst nature's tranquility." 
-    },
-    { 
-      title: "BBQ", 
-      icon: <GiBarbecue />, 
-      description: "Enjoy a sizzling outdoor barbecue experience surrounded by lush woodland scenery." 
-    },
-    { 
-      title: "Open Theater", 
+      title: "Open Screening", 
       icon: <FaFilm />, 
       description: "Experience unforgettable movie nights under the stars at our open cinema." 
     },
@@ -38,24 +44,20 @@ const Amenities = () => {
       icon: <FaBinoculars />, 
       description: "Stargaze and explore the clear night sky with our premium telescopes." 
     },
-    { 
-      title: "Scenic Stay", 
-      icon: <FaTree />, 
-      description: "Immerse yourself in nature with our picturesque and tranquil forest accommodations." 
-    },
+    
     { 
       title: "Trampoline", 
       icon: <MdOutlineSportsTennis />, 
       description: "Enjoy family-friendly fun and endless outdoor entertainment on our safe trampoline." 
     },
     { 
-      title: "Free WiFi", 
+      title: "WiFi", 
       icon: <FaWifi />, 
       description: "Stay connected with high-speed internet while enjoying your remote wilderness escape." 
     },
     { 
       title: "Viewpoint", 
-      icon: <FaTree />, 
+      icon: <FaMountain />, 
       description: "Marvel at breathtaking forest panoramas from our designated scenic vantage points." 
     },
     { 
@@ -93,7 +95,7 @@ const Amenities = () => {
   }, []);
 
   return (
-    <div ref={sectionRef} className="bg-[#f5f5f5] py-10 px-6">
+    <div ref={sectionRef} className="bg-[#f5f5f5] py-10 px-8 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto text-center">
 
         {/* ===== TITLE ===== */}
@@ -132,13 +134,13 @@ const Amenities = () => {
           }`}
           style={{ transitionDelay: "200ms" }}
         >
-          Enjoy a comfortable and adventurous stay with our premium facilities
+          Enjoy a comfortable and adventurous stay with our amenity facilities
           designed for nature lovers.
         </p>
 
         {/* ===== GRID ===== */}
         {/* Changed to grid-cols-2 for mobile base, adjusting gap for smaller screens */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {amenities.map((item, index) => (
             <div
               key={index}
