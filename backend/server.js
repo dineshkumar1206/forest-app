@@ -34,12 +34,23 @@ pool.getConnection()
 // --- 3. API ENDPOINT TO HANDLE FORM SUBMISSION ---
 app.post("/api/book", async (req, res) => {
   try {
-    const { name, phone, adults, kids, checkIn, checkOut } = req.body;
-
+     const { name, phone, adults, kids, checkIn, checkOut, packages } = req.body;
     // A. Save to MySQL Database
-    const sqlQuery = `INSERT INTO bookings (name, phone, adults, kids, checkIn, checkOut) VALUES (?, ?, ?, ?, ?, ?)`;
-    await pool.execute(sqlQuery, [name, phone, adults || 0, kids || 0, checkIn, checkOut]);
-
+       const sqlQuery = `
+         INSERT INTO bookings (name, phone, adults, kids, checkIn, checkOut, packages) 
+         VALUES (?, ?, ?, ?, ?, ?, ?)
+       `;
+       
+       await pool.execute(sqlQuery, [
+         name,
+         phone,
+         adults || 0,
+         kids || 0,
+         checkIn,
+         checkOut,
+         (packages && packages.length > 0) ? packages.join(", ") : null
+       ]);
+       
     /*
     // B. Send Email to Owner (For Future Use)
     // const mailOptionsOwner = {
