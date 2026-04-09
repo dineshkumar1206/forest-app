@@ -121,7 +121,7 @@ export default function ForestStayFeatures() {
                   "Boosts immunity and refreshes the mind",
                   "Acts as a natural mosquito repellent",
                   "Creates a cool, clean and healthy environment",
-                  "Forest Stay isn’t just a place to stay — it’s a natural wellness escape in the clouds",
+                  "Forest Stay isn’t just a place to stay it’s a natural wellness escape in the clouds",
                 ]}
               />
             </AnimationWrapper>

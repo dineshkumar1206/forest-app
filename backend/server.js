@@ -1,76 +1,116 @@
 const express = require("express");
-const mysql = require("mysql2/promise");
+const { Sequelize, DataTypes } = require("sequelize");
 const cors = require("cors");
-// const nodemailer = require("nodemailer"); // Commented out for now
 require("dotenv").config();
 
 const app = express();
-app.use(cors());
+
+// --- CORS SETUP ---
+app.use(cors({
+    origin: [
+        'https://forest-app-psi.vercel.app',
+        'http://localhost:5173'
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 app.use(express.json());
 
-// --- 1. MYSQL DATABASE CONNECTION POOL ---
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+// --- 1. SEQUELIZE CONNECTION ---
+const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
+    {
+        host: process.env.DB_HOST,
+        dialect: 'mysql',
+        logging: false, // Console-la SQL queries varaama irukka
+    }
+);
+
+// --- 2. DEFINE MODEL (TABLE STRUCTURE) ---
+const Booking = sequelize.define('Booking', {
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    adults: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
+    kids: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
+    checkIn: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+    },
+    checkOut: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+    },
+    packages: {
+        type: DataTypes.TEXT,
+        // Array-ah string-ah mathi store panna udhavum
+        get() {
+            const rawValue = this.getDataValue('packages');
+            return rawValue ? rawValue.split(', ') : [];
+        },
+        set(val) {
+            this.setDataValue('packages', Array.isArray(val) ? val.join(', ') : val);
+        }
+    }
+}, {
+    tableName: 'bookings', // DB-la table name bookings nu irukkum
+    timestamps: true       // createdAt, updatedAt automatic-ah varum
 });
 
-// Test the connection
-pool.getConnection()
-  .then(() => console.log("✅ MySQL Database Connected Successfully"))
-  .catch((err) => console.log("❌ MySQL Connection Error:", err));
+// --- 3. ✨ AUTOMATIC TABLE SYNC ✨ ---
+// alter: true kudutha, neenga column add panna automatic-ah update aagum
+sequelize.sync({ alter: true })
+    .then(() => console.log("✅ MySQL Tables Synced Successfully"))
+    .catch((err) => console.log("❌ MySQL Sync Error:", err));
 
-/* // --- 2. EMAIL SETUP (Nodemailer - For Future Use) ---
-// const transporter = nodemailer.createTransport({
-//   service: 'gmail', 
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS, 
-//   },
-// });
-*/
+// --- 4. API ENDPOINTS ---
 
-// --- 3. API ENDPOINT TO HANDLE FORM SUBMISSION ---
-app.post("/api/book", async (req, res) => {
-  try {
-     const { name, phone, adults, kids, checkIn, checkOut, packages } = req.body;
-    // A. Save to MySQL Database
-       const sqlQuery = `
-         INSERT INTO bookings (name, phone, adults, kids, checkIn, checkOut, packages) 
-         VALUES (?, ?, ?, ?, ?, ?, ?)
-       `;
-       
-       await pool.execute(sqlQuery, [
-         name,
-         phone,
-         adults || 0,
-         kids || 0,
-         checkIn,
-         checkOut,
-         (packages && packages.length > 0) ? packages.join(", ") : null
-       ]);
-       
-    /*
-    // B. Send Email to Owner (For Future Use)
-    // const mailOptionsOwner = {
-    //   from: process.env.EMAIL_USER,
-    //   to: process.env.OWNER_EMAIL,
-    //   subject: "🎉 New Booking Request!",
-    //   text: `New booking request from ${name} (${phone}).\nDates: ${checkIn} to ${checkOut}.\nGuests: ${adults} Adults, ${kids} Kids.`
-    // };
-    // await transporter.sendMail(mailOptionsOwner);
-    */
-
-    // Success Response
-    res.status(200).json({ success: true, message: "Booking saved to database!" });
-
-  } catch (error) {
-    console.error("Booking Error:", error);
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
+app.get('/foreststay_v2', (req, res) => {
+    res.send('Foreststay backend running with Sequelize')
 });
 
-// --- 4. START SERVER ---
+// Post Booking Data
+app.post("/foreststay_v2/api/book", async (req, res) => {
+    try {
+        const { name, phone, adults, kids, checkIn, checkOut, packages } = req.body;
+
+        // A. Save to MySQL using Sequelize
+        const newBooking = await Booking.create({
+            name,
+            phone,
+            adults: adults || 0,
+            kids: kids || 0,
+            checkIn,
+            checkOut,
+            packages // model-oda 'set' method automatic-ah join panni store pannum
+        });
+
+        // Success Response
+        res.status(200).json({ 
+            success: true, 
+            message: "Booking saved successfully!", 
+            data: newBooking 
+        });
+
+    } catch (error) {
+        console.error("Booking Error:", error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// --- 5. START SERVER ---
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

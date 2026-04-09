@@ -1,14 +1,29 @@
 import React from "react";
 
+const MountainIcon = () => (
+  <svg
+    className="w-6 h-6 text-white"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <path d="M8 3l4 8 5-5 5 15H2L8 3z" />
+  </svg>
+);
+
 const Navbar = () => {
   return (
     <header className="absolute top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-end px-6 py-5 text-white">
-        
-        {/* Logo */}
-        {/* <h1 className="text-2xl font-bold tracking-wide">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5 text-white">
+
+         {/*  LOGO */}
+      <div className="flex items-center gap-2">
+        <MountainIcon />
+        <h1 className="text-white text-xl font-semibold tracking-wide">
           Forest Stay
-        </h1> */}
+        </h1>
+      </div>
 
         {/* Menu */}
         {/* <nav className="hidden md:flex gap-8 text-sm font-medium">

@@ -30,7 +30,7 @@ const FloatingContact = () => {
 
       {/* Instagram */}
       <a
-        href="https://instagram.com/"
+        href="https://www.instagram.com/foreststay.in"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-[#4CAF50] hover:bg-[#3d8c40] text-white p-3 rounded-full shadow-lg transition duration-300 hover:scale-110"

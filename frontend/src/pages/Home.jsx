@@ -6,6 +6,8 @@ const Home = () => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
 
+  console.log("Check-in:", checkIn, "Check-out:", checkOut); // Debugging logs
+
   // ✅ TEXT INPUT STATE (Added adults and kids here)
   const [formData, setFormData] = useState({
     name: "",
@@ -14,6 +16,8 @@ const Home = () => {
     kids: "",
     packages:[],
   });
+
+  console.log("Form Data:", formData); // Debugging logs for form data
 
   // ✅ ERROR STATE
   const [errors, setErrors] = useState({});
@@ -89,7 +93,7 @@ const Home = () => {
 
       try {
         // 1. SAVE TO DATABASE FIRST
-        const response = await fetch("http://localhost:5000/api/book", {
+        const response = await fetch("https://amigowebster.in/foreststay_v2/api/book", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -150,12 +154,12 @@ const Home = () => {
         <Navbar />
 
         {/* CONTENT */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-center md:justify-between h-full min-h-screen md:min-h-0 max-w-7xl mx-auto px-6 pt-32 md:pt-0 pb-16 md:pb-0 gap-10 md:gap-0">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between h-full min-h-screen md:min-h-0 max-w-7xl mx-auto px-14 pt-20 md:pt-0 pb-16 md:pb-0 gap-10 md:gap-0">
           
           {/* LEFT CONTENT */}
-          <div className="text-white w-full max-w-2xl font-body flex flex-col items-center text-center">
+          <div className="text-white w-full max-w-2xl font-body flex flex-col items-center text-start">
             
-            <div
+            {/* <div
               className="flex items-center justify-center gap-4 mb-4 opacity-0"
               style={{ animation: "slideDown 1s ease forwards" }}
             >
@@ -170,7 +174,7 @@ const Home = () => {
               <svg className="w-12 h-[10px] hidden md:block" viewBox="0 0 100 10">
                 <polyline points="0,0 20,10 40,0 60,10 80,0 100,10" fill="none" stroke="#facc15" strokeWidth="2" />
               </svg>
-            </div>
+            </div> */}
 
             <h1
               className="font-heading text-3xl md:text-4xl lg:text-4xl font-bold tracking-[0.5px] leading-relaxed mb-6 opacity-0 text-center"
@@ -180,13 +184,13 @@ const Home = () => {
             </h1>
 
             <p
-              className="text-gray-200 mb-8 opacity-0 text-sm md:text-base leading-relaxed text-center"
+              className="text-gray-200 mb-8 opacity-0 text-sm md:text-base leading-relaxed text-start"
               style={{ animation: "slideUp 1s ease forwards", animationDelay: "0.5s" }}
             >
               Forest Stay, at Yelagiri is a scenic private forest stay at a beautiful 
               sunset viewpoint. Perfect for families and groups, it offers campfire, 
               a balcony open-air theatre, and stunning infinity views of towns, lakes, 
-              roads, railways, and mountain ranges—along with the magical cloud-bed 
+              roads, railways, and mountain ranges along with the magical cloud-bed 
               experience on special days.
             </p>
           </div>
@@ -246,7 +250,7 @@ const Home = () => {
                    name="kids"
                    value={formData.kids} 
                    onChange={handleChange} 
-                   placeholder="Kids (under 12 years)"
+                   placeholder="Kids (5 - 12 years)"
                    className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
                  />
                </div>
