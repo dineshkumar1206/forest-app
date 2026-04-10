@@ -95,7 +95,7 @@ const Amenities = () => {
   }, []);
 
   return (
-    <div ref={sectionRef} className="bg-[#f5f5f5] py-10 px-8 md:px-12 lg:px-20">
+    <div ref={sectionRef} className="bg-[#f5f5f5] py-4 px-8 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto text-center">
 
         {/* ===== TITLE ===== */}

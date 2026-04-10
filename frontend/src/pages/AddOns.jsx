@@ -31,7 +31,7 @@ const AddOns = () => {
   return (
     <div
       ref={sectionRef}
-      className="bg-[#f9fafb] py-16 px-6 sm:px-10 md:px-16 lg:px-24"
+      className="bg-[#f9fafb] py-8 px-6 sm:px-10 md:px-16 lg:px-24"
     >
       <div className="max-w-7xl mx-auto">
         

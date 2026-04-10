@@ -55,15 +55,9 @@ const Booking = sequelize.define('Booking', {
         allowNull: false
     },
     packages: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         // Array-ah string-ah mathi store panna udhavum
-        get() {
-            const rawValue = this.getDataValue('packages');
-            return rawValue ? rawValue.split(', ') : [];
-        },
-        set(val) {
-            this.setDataValue('packages', Array.isArray(val) ? val.join(', ') : val);
-        }
+        allowNull: false
     }
 }, {
     tableName: 'bookings', // DB-la table name bookings nu irukkum
@@ -86,7 +80,7 @@ app.get('/foreststay_v2', (req, res) => {
 app.post("/foreststay_v2/api/book", async (req, res) => {
     try {
         const { name, phone, adults, kids, checkIn, checkOut, packages } = req.body;
-
+        //  console.log("📩 Incoming Booking Data:", req.body);
         // A. Save to MySQL using Sequelize
         const newBooking = await Booking.create({
             name,
@@ -97,6 +91,7 @@ app.post("/foreststay_v2/api/book", async (req, res) => {
             checkOut,
             packages // model-oda 'set' method automatic-ah join panni store pannum
         });
+        // console.log("✅ Saved Booking:", newBooking.toJSON());
 
         // Success Response
         res.status(200).json({ 

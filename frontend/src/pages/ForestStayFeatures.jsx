@@ -87,7 +87,7 @@ export default function ForestStayFeatures() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-b from-white via-gray-50 to-white py-14 sm:py-20">
+    <section className="bg-gradient-to-b from-white via-gray-50 to-white py-8 sm:py-12">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 items-stretch">
           

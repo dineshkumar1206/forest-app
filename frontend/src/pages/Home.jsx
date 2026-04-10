@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 
+
 const Home = () => {
   // ✅ DATE STATE
   const [checkIn, setCheckIn] = useState("");
@@ -14,7 +15,7 @@ const Home = () => {
     phone: "",
     adults: "",
     kids: "",
-    packages:[],
+    packages: "",
   });
 
   console.log("Form Data:", formData); // Debugging logs for form data
@@ -60,19 +61,11 @@ const Home = () => {
     return Object.keys(newErrors).length === 0;
   };
         //  Check if the package is already selected, if not add it, if yes remove it
-  const handlePackageChange = (e) => {
-  const { value, checked } = e.target;
-
-  setFormData((prev) => {
-    if (checked) {
-      return { ...prev, packages: [...prev.packages, value] };
-    } else {
-      return {
-        ...prev,
-        packages: prev.packages.filter((pkg) => pkg !== value),
-      };
-    }
-  });
+const handlePackageChange = (e) => {
+  setFormData((prev) => ({
+    ...prev,
+    packages: e.target.value,
+  }));
 };
 
  // ✅ HANDLE SUBMIT & WHATSAPP REDIRECT
@@ -114,7 +107,7 @@ const Home = () => {
             `*Phone:* ${formData.phone}%0A` +
             `*Adults:* ${formData.adults || 0}%0A` +
             `*Kids:* ${formData.kids || 0}%0A` +
-            `*Packages:* ${formData.packages.join(", ") || "None"}%0A` +
+            `*Packages:* ${formData.packages || "None"}%0A` +
             `*Check-in:* ${formatDate(checkIn)}%0A` +
             `*Check-out:* ${formatDate(checkOut)}`;
 
@@ -154,7 +147,7 @@ const Home = () => {
         <Navbar />
 
         {/* CONTENT */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between h-full min-h-screen md:min-h-0 max-w-7xl mx-auto px-14 pt-20 md:pt-0 pb-16 md:pb-0 gap-10 md:gap-0">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between h-full min-h-screen md:min-h-0 max-w-7xl mx-auto px-14 pt-20 md:pt-0 pb-10 md:pb-0 gap-10 md:gap-0">
           
           {/* LEFT CONTENT */}
           <div className="text-white w-full max-w-2xl font-body flex flex-col items-center text-start">
@@ -261,7 +254,7 @@ const Home = () => {
 
   <div className="flex gap-3 flex-wrap">
     {["BYOT", "Tent Stay", "Room Stay"].map((pkg) => {
-      const isSelected = formData.packages.includes(pkg);
+      const isSelected = formData.packages === pkg;
 
       return (
         <label
@@ -274,7 +267,8 @@ const Home = () => {
           }`}
         >
           <input
-            type="checkbox"
+            type="radio"
+            name="package"
             value={pkg}
             onChange={handlePackageChange}
             checked={isSelected}

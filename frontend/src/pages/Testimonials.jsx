@@ -53,7 +53,7 @@ const cardVariants = {
 
 const Testimonials = () => {
   return (
-    <section className="relative bg-[#f9fafb] py-16 px-4 md:py-24 md:px-6 overflow-hidden">
+    <section className="relative bg-[#f9fafb] py-8 px-4 md:py-10 md:px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         
         {/* ===== HEADER ===== */}
