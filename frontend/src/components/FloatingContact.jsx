@@ -13,9 +13,9 @@ const FloatingContact = () => {
       {/* Phone */}
       <a
         href="tel:+919551284478"
-        className="bg-[#4CAF50] hover:bg-[#3d8c40] text-white p-3 rounded-full shadow-lg transition duration-300 hover:scale-110"
+        className="bg-[#4CAF50] hover:bg-[#3d8c40] text-white p-4 md:p-4 lg:p-3 rounded-full shadow-lg transition duration-300 hover:scale-110"
       >
-        <FaPhoneAlt className="text-white text-base md:text-lg" />
+        <FaPhoneAlt className="text-white text-lg md:text-xl lg:text-lg" />
       </a>
 
       {/* WhatsApp */}
@@ -23,9 +23,9 @@ const FloatingContact = () => {
         href="https://wa.me/919551284478"
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-[#4CAF50] hover:bg-[#3d8c40] text-white p-3 rounded-full shadow-lg transition duration-300 hover:scale-110"
+        className="bg-[#4CAF50] hover:bg-[#3d8c40] text-white p-4 md:p-4 lg:p-3 rounded-full shadow-lg transition duration-300 hover:scale-110"
       >
-        <FaWhatsapp className="text-white text-base md:text-lg" />
+        <FaWhatsapp className="text-white text-lg md:text-xl lg:text-lg" />
       </a>
 
       {/* Instagram */}
@@ -33,17 +33,17 @@ const FloatingContact = () => {
         href="https://www.instagram.com/foreststay.in"
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-[#4CAF50] hover:bg-[#3d8c40] text-white p-3 rounded-full shadow-lg transition duration-300 hover:scale-110"
+        className="bg-[#4CAF50] hover:bg-[#3d8c40] text-white p-4 md:p-4 lg:p-3 rounded-full shadow-lg transition duration-300 hover:scale-110"
       >
-        <FaInstagram className="text-white text-base md:text-lg" />
+        <FaInstagram className="text-white text-lg md:text-xl lg:text-lg" />
       </a>
 
       {/* Email */}
               <a
            href="mailto:info@foreststay.com"
-           className="bg-[#4CAF50] hover:bg-[#3d8c40] text-white p-3 rounded-full shadow-lg transition duration-300 hover:scale-110"
+           className="bg-[#4CAF50] hover:bg-[#3d8c40] text-white p-4 md:p-4 lg:p-3 rounded-full shadow-lg transition duration-300 hover:scale-110"
          >
-           <FaEnvelope className="text-white text-base md:text-lg" />
+           <FaEnvelope className="text-white text-lg md:text-xl lg:text-lg" />
          </a>
 
     </div>

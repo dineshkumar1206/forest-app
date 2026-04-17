@@ -14,8 +14,8 @@ const MountainIcon = () => (
 
 const Navbar = () => {
   return (
-    <header className="absolute top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5 text-white">
+    <header className="absolute top-0 left-0  w-full z-50">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5 lg:pb-10 text-white">
 
          {/*  LOGO */}
       <div className="flex items-center gap-2">
