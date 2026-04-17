@@ -7,7 +7,7 @@ const AddOns = () => {
     { title: "Swamimalai Trek", img: "/images/addon6.png", price: "500" },
     { title: "Jungle Safari", img: "/images/addon.jpg", price: "1000" },
     { title: "Jalagamparai Trek", img: "/images/addon1.png", price: "500" },
-    { title: "Adventure Games", img: "/images/addon4.png", price: "500" },
+    { title: "Adventure Games", img: "/images/addon5.png", price: "500" },
   ];
 
   const sectionRef = useRef(null);
