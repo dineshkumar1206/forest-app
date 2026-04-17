@@ -24,18 +24,8 @@ const Amenities = () => {
       icon: <GiCampfire />, 
       description: "Unwind by a cozy campfire during your relaxing evening forest retreat." 
     },
-    // { 
-    //   title: "Breakfast", 
-    //   icon: <FaUtensils />, 
-    //   description: "Wake up to a delicious, freshly prepared breakfast amidst nature's tranquility." 
-    // },
-    // { 
-    //   title: "BBQ", 
-    //   icon: <GiBarbecue />, 
-    //   description: "Enjoy a sizzling outdoor barbecue experience surrounded by lush woodland scenery." 
-    // },
     { 
-      title: "Open Screening", 
+      title: "Open Theater", 
       icon: <FaFilm />, 
       description: "Experience unforgettable movie nights under the stars at our open cinema." 
     },
@@ -44,7 +34,6 @@ const Amenities = () => {
       icon: <FaBinoculars />, 
       description: "Stargaze and explore the clear night sky with our premium telescopes." 
     },
-    
     { 
       title: "Trampoline", 
       icon: <MdOutlineSportsTennis />, 
@@ -67,7 +56,6 @@ const Amenities = () => {
     },
   ];
 
-  // ===== SCROLL ANIMATION =====
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -78,8 +66,6 @@ const Amenities = () => {
           setIsVisible(true);
         }
       },
-      // Lowered threshold to 0.05 so the animation triggers almost immediately 
-      // when the section enters the viewport, especially helpful for tall mobile sections.
       { threshold: 0.05 } 
     );
 
@@ -95,10 +81,10 @@ const Amenities = () => {
   }, []);
 
   return (
-    <div ref={sectionRef} className="bg-[#f5f5f5] py-4 px-8 md:px-12 lg:px-20">
+    <div ref={sectionRef} className="bg-[#f5f5f5] py-4 px-4 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto text-center">
 
-        {/* ===== TITLE ===== */}
+        {/* TITLE */}
         <div
           className={`flex items-center justify-center gap-2 md:gap-4 mb-4 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-20"
@@ -127,7 +113,7 @@ const Amenities = () => {
           </svg>
         </div>
 
-        {/* ===== DESCRIPTION ===== */}
+        {/* DESCRIPTION */}
         <p
           className={`text-gray-600 max-w-2xl mx-auto mb-12 transition-all duration-1000 text-sm md:text-base ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
@@ -138,37 +124,35 @@ const Amenities = () => {
           designed for nature lovers.
         </p>
 
-        {/* ===== GRID ===== */}
-        {/* Changed to grid-cols-2 for mobile base, adjusting gap for smaller screens */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* GRID */}
+        {/* ✅ MOBILE: 4 columns */}
+        <div className="grid grid-cols-4 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {amenities.map((item, index) => (
             <div
               key={index}
-              // Reduced mobile padding (p-4) to fit 2 columns better, desktop stays p-6
-              className={`border border-dashed border-gray-300 p-4 md:p-6 rounded-lg text-center bg-white hover:shadow-lg transition-all duration-700 hover:-translate-y-2 ${
+              className={`border border-dashed border-gray-300 p-3 md:p-6 rounded-lg text-center bg-white hover:shadow-lg transition-all duration-700 hover:-translate-y-2 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : `opacity-0 ${
                       index % 2 === 0
-                        ? "translate-y-20"     // odd cards → from bottom
-                        : "-translate-y-20"    // even cards → from top
+                        ? "translate-y-20"
+                        : "-translate-y-20"
                     }`
               }`}
               style={{
                 transitionDelay: `${300 + index * 100}ms`,
               }}
             >
-              {/* ICON */}
-              <div className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 rounded-full bg-yellow-200 flex items-center justify-center text-xl md:text-2xl text-gray-800">
+              <div className="w-10 h-10 md:w-16 md:h-16 mx-auto mb-2 md:mb-4 rounded-full bg-yellow-200 flex items-center justify-center text-lg md:text-2xl text-gray-800">
                 {item.icon}
               </div>
 
-              <h3 className="font-semibold text-base md:text-lg mb-2">
+              <h3 className="font-semibold text-xs md:text-lg mb-1 md:mb-2">
                 {item.title}
               </h3>
 
-              {/* DYNAMIC DESCRIPTION */}
-              <p className="text-gray-500 text-xs md:text-sm">
+              <p className="text-gray-500 text-[10px] md:text-sm hidden md:block">
+                {/* <p className="text-gray-500 text-[9px] sm:text-[10px] md:text-sm leading-tight"> */}
                 {item.description}
               </p>
             </div>

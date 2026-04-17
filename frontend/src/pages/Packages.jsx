@@ -10,12 +10,12 @@ const Packages = () => {
     {
       title: "Tent Stay",
       price: "₹2,500",
-      img: "/images/packages3.jpg",
+      img: "/images/packages-2.jpg",
     },
     {
       title: "Room Stay",
       price: "₹3000",
-      img: "/images/packages2.jpg",
+      img: "/images/packages-3.jpg",
     }
     
   ];

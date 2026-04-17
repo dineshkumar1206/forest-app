@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 
-
 const Home = () => {
   // ✅ DATE STATE
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
 
-  console.log("Check-in:", checkIn, "Check-out:", checkOut); // Debugging logs
-
-  // ✅ TEXT INPUT STATE (Added adults and kids here)
+  // ✅ TEXT INPUT STATE
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -17,8 +14,6 @@ const Home = () => {
     kids: "",
     packages: "",
   });
-
-  console.log("Form Data:", formData); // Debugging logs for form data
 
   // ✅ ERROR STATE
   const [errors, setErrors] = useState({});
@@ -48,7 +43,7 @@ const Home = () => {
     if (!formData.name.trim()) newErrors.name = "Name is required.";
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required.";
-    } else if (!/^\d{10}$/.test(formData.phone.replace(/[-+()\s]/g, ''))) {
+    } else if (!/^\d{10}$/.test(formData.phone.replace(/[-+()\s]/g, ""))) {
       newErrors.phone = "Enter a valid 10-digit phone number.";
     }
     if (!checkIn) newErrors.checkIn = "Check-in date is required.";
@@ -60,20 +55,19 @@ const Home = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-        //  Check if the package is already selected, if not add it, if yes remove it
-const handlePackageChange = (e) => {
-  setFormData((prev) => ({
-    ...prev,
-    packages: e.target.value,
-  }));
-};
 
- // ✅ HANDLE SUBMIT & WHATSAPP REDIRECT
-  const handleSubmit = async (e) => { // Make sure this is async
+  const handlePackageChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      packages: e.target.value,
+    }));
+  };
+
+  // ✅ HANDLE SUBMIT & WHATSAPP REDIRECT
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      // Prepare data for the database
       const submissionData = {
         name: formData.name,
         phone: formData.phone,
@@ -85,23 +79,23 @@ const handlePackageChange = (e) => {
       };
 
       try {
-        // 1. SAVE TO DATABASE FIRST
-        const response = await fetch("https://amigowebster.in/foreststay_v2/api/book", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(submissionData),
-        });
+        const response = await fetch(
+          "https://amigowebster.in/foreststay_v2/api/book",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(submissionData),
+          }
+        );
 
         const data = await response.json();
 
-        // 2. IF DATABASE SAVE IS SUCCESSFUL, OPEN WHATSAPP
         if (data.success) {
-          const whatsappNumber = "919551284478"; 
-          
-          // Build the message string
-          const message = `*New Booking Inquiry*%0A` +
+          const whatsappNumber = "919551284478";
+          const message =
+            `*New Booking Inquiry*%0A` +
             `--------------------------%0A` +
             `*Name:* ${formData.name}%0A` +
             `*Phone:* ${formData.phone}%0A` +
@@ -111,13 +105,8 @@ const handlePackageChange = (e) => {
             `*Check-in:* ${formatDate(checkIn)}%0A` +
             `*Check-out:* ${formatDate(checkOut)}`;
 
-          // Create WhatsApp URL
           const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
-
-          // Open WhatsApp in new tab
           window.open(whatsappURL, "_blank");
-
-          // Reload page to clear the form
           window.location.reload();
         } else {
           alert("Error saving booking to database.");
@@ -131,10 +120,11 @@ const handlePackageChange = (e) => {
 
   return (
     <>
-      <div className="relative min-h-screen md:h-[110vh] w-full overflow-hidden overflow-y-auto md:overflow-hidden">
+      {/* UPDATED: h-screen (100vh) set here */}
+      <div className="relative min-h-screen w-full flex flex-col overflow-hidden bg-[#f5f5f5]">
         
-        {/* Background Image */}
-        <div className="absolute inset-0">
+        {/* Background Image Container - Now pinned to 100% height */}
+        <div className="absolute inset-0 w-full h-full">
           <img
             src="/images/Homepage-banner.jpg"
             alt="forest"
@@ -143,66 +133,53 @@ const handlePackageChange = (e) => {
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
 
-        {/* Navbar */}
         <Navbar />
 
-        {/* CONTENT */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between h-full min-h-screen md:min-h-0 max-w-7xl mx-auto px-14 pt-20 md:pt-0 pb-10 md:pb-0 gap-10 md:gap-0">
+        {/* CONTENT - Uses flex-grow to occupy available space within the 100vh container */}
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between flex-grow max-w-7xl mx-auto px-6 md:px-14 pt-24 pb-20 md:pt-0 md:pb-0 gap-10 md:gap-0">
           
           {/* LEFT CONTENT */}
           <div className="text-white w-full max-w-2xl font-body flex flex-col items-center text-start">
-            
-            {/* <div
-              className="flex items-center justify-center gap-4 mb-4 opacity-0"
-              style={{ animation: "slideDown 1s ease forwards" }}
-            >
-              <svg className="w-12 h-[10px] hidden md:block" viewBox="0 0 100 10">
-                <polyline points="0,10 20,0 40,10 60,0 80,10 100,0" fill="none" stroke="#facc15" strokeWidth="2" />
-              </svg>
-
-              <p className="text-yellow-400 tracking-[4px] text-sm font-medium uppercase">
-                Forest Stay
-              </p>
-
-              <svg className="w-12 h-[10px] hidden md:block" viewBox="0 0 100 10">
-                <polyline points="0,0 20,10 40,0 60,10 80,0 100,10" fill="none" stroke="#facc15" strokeWidth="2" />
-              </svg>
-            </div> */}
-
             <h1
-              className="font-heading text-3xl md:text-4xl lg:text-4xl font-bold tracking-[0.5px] leading-relaxed mb-6 opacity-0 text-center"
-              style={{ animation: "slideUp 1s ease forwards", animationDelay: "0.3s" }}
+              className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold tracking-[0.5px] leading-snug mb-4 opacity-0 text-left lg:absolute lg:top-34 lg:left-16"
+              style={{
+                animation: "slideUp 1s ease forwards",
+                animationDelay: "0.3s",
+              }}
             >
-              FOREST STAY <span className="text-yellow-400 text-4xl md:text-5xl">YELAGIRI HILLS</span>
+              YELAGIRI HILLS
             </h1>
 
             <p
-              className="text-gray-200 mb-8 opacity-0 text-sm md:text-base leading-relaxed text-start"
-              style={{ animation: "slideUp 1s ease forwards", animationDelay: "0.5s" }}
+              className="text-gray-200 mb-4 md:mb-6 opacity-0 text-sm md:text-base leading-relaxed text-start lg:-mt-10"
+              style={{
+                animation: "slideUp 1s ease forwards",
+                animationDelay: "0.5s",
+              }}
             >
-              Forest Stay, at Yelagiri is a scenic private forest stay at a beautiful 
-              sunset viewpoint. Perfect for families and groups, it offers campfire, 
-              a balcony open-air theatre, and stunning infinity views of towns, lakes, 
-              roads, railways, and mountain ranges along with the magical cloud-bed 
-              experience on special days.
+              Forest Stay, at Yelagiri is a scenic private forest stay at a
+              beautiful sunset viewpoint. Perfect for families and groups, it
+              offers campfire, a balcony open-air theatre, and stunning infinity
+              views of towns, lakes, roads, railways, and mountain ranges along
+              with the magical cloud-bed experience on special days.
             </p>
           </div>
 
           {/* RIGHT SIDE FORM */}
           <div
             id="booking-form"
-            className="w-full max-w-md opacity-0"
-            style={{ animation: "slideUp 1s ease forwards", animationDelay: "0.7s" }}
+            className="w-full mt-10 max-w-md opacity-0"
+            style={{
+              animation: "slideUp 1s ease forwards",
+              animationDelay: "0.7s",
+            }}
           >
             <div className="backdrop-blur-md bg-white/10 border border-white/30 rounded-xl p-6 text-white shadow-xl">
-              
               <h2 className="text-xl font-semibold mb-4 text-center">
                 Book Your Stay
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                
-                {/* NAME */}
                 <div>
                   <input
                     type="text"
@@ -210,12 +187,15 @@ const handlePackageChange = (e) => {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Full Name"
-                    className={`w-full px-4 py-2 bg-transparent border rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300 ${errors.name ? 'border-red-500' : 'border-white/30'}`}
+                    className={`w-full px-4 py-2 bg-transparent border rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300 ${
+                      errors.name ? "border-red-500" : "border-white/30"
+                    }`}
                   />
-                  {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+                  {errors.name && (
+                    <p className="text-red-400 text-xs mt-1">{errors.name}</p>
+                  )}
                 </div>
 
-                {/* PHONE */}
                 <div>
                   <input
                     type="tel"
@@ -223,144 +203,179 @@ const handlePackageChange = (e) => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="Phone Number"
-                    className={`w-full px-4 py-2 bg-transparent border rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300 ${errors.phone ? 'border-red-500' : 'border-white/30'}`}
+                    className={`w-full px-4 py-2 bg-transparent border rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300 ${
+                      errors.phone ? "border-red-500" : "border-white/30"
+                    }`}
                   />
-                  {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
+                  {errors.phone && (
+                    <p className="text-red-400 text-xs mt-1">{errors.phone}</p>
+                  )}
                 </div>
 
-               {/* ADULTS & KIDS */}
-               <div className="flex gap-3">
-                 <input
-                   type="number"
-                   name="adults"
-                   value={formData.adults}
-                   onChange={handleChange} 
-                   placeholder="Adults (13+ years)"
-                   className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
-                 />
-                 <input
-                   type="number"
-                   name="kids"
-                   value={formData.kids} 
-                   onChange={handleChange} 
-                   placeholder="Kids (5 - 12 years)"
-                   className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
-                 />
-               </div>
-
-            {/* PACKAGES */}
-<div>
-  <p className="text-sm mb-3 text-white/80">Select Package</p>
-
-  <div className="flex gap-3 flex-wrap">
-    {["BYOT", "Tent Stay", "Room Stay"].map((pkg) => {
-      const isSelected = formData.packages === pkg;
-
-      return (
-        <label
-          key={pkg}
-          className={`cursor-pointer px-4 py-2 rounded-full border text-sm transition-all duration-300 
-          ${
-            isSelected
-              ? "bg-yellow-400 text-black border-yellow-400 shadow-md"
-              : "border-white/30 text-white hover:border-yellow-400 hover:text-yellow-400"
-          }`}
-        >
-          <input
-            type="radio"
-            name="package"
-            value={pkg}
-            onChange={handlePackageChange}
-            checked={isSelected}
-            className="hidden"
-          />
-          {pkg}
-        </label>
-      );
-    })}
-  </div>
-</div>
-
-                {/* CUSTOM DATE PICKERS WITH DD/MM/YYYY */}
                 <div className="flex gap-3">
-                  {/* CHECK-IN */}
+                  <input
+                    type="number"
+                    name="adults"
+                    value={formData.adults}
+                    onChange={handleChange}
+                    placeholder="Adults (13+ years)"
+                    className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
+                  />
+                  <input
+                    type="number"
+                    name="kids"
+                    value={formData.kids}
+                    onChange={handleChange}
+                    placeholder="Kids (5 - 12 years)"
+                    className="w-1/2 px-4 py-2 bg-transparent border border-white/30 rounded-md focus:outline-none focus:border-yellow-400 text-white placeholder-gray-300"
+                  />
+                </div>
+
+                <div>
+                  <p className="text-sm mb-3 text-white/80">Select Package</p>
+                  <div className="flex gap-3 flex-wrap">
+                    {["BYOT", "Tent Stay", "Room Stay"].map((pkg) => {
+                      const isSelected = formData.packages === pkg;
+                      return (
+                        <label
+                          key={pkg}
+                          className={`cursor-pointer px-4 py-2 rounded-full border text-sm transition-all duration-300 
+                          ${
+                            isSelected
+                              ? "bg-yellow-400 text-black border-yellow-400 shadow-md"
+                              : "border-white/30 text-white hover:border-yellow-400 hover:text-yellow-400"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="package"
+                            value={pkg}
+                            onChange={handlePackageChange}
+                            checked={isSelected}
+                            className="hidden"
+                          />
+                          {pkg}
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
                   <div className="w-1/2 relative group">
-                    <label className="text-xs text-white/70 mb-1 block pl-1">Check In</label>
-                    <div className={`relative flex items-center w-full px-4 py-2 bg-transparent border rounded-md group-focus-within:border-yellow-400 transition-colors ${errors.checkIn ? 'border-red-500' : 'border-white/30'}`}>
-                      {/* Fake Display Text */}
-                      <span className={`flex-1 ${checkIn ? 'text-white' : 'text-gray-300'}`}>
+                    <label className="text-xs text-white/70 mb-1 block pl-1">
+                      Check In
+                    </label>
+                    <div
+                      className={`relative flex items-center w-full px-4 py-2 bg-transparent border rounded-md group-focus-within:border-yellow-400 transition-colors ${
+                        errors.checkIn ? "border-red-500" : "border-white/30"
+                      }`}
+                    >
+                      <span
+                        className={`flex-1 ${
+                          checkIn ? "text-white" : "text-gray-300"
+                        }`}
+                      >
                         {checkIn ? formatDate(checkIn) : "DD/MM/YYYY"}
                       </span>
-                      {/* Calendar Icon */}
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white/70">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-5 text-white/70"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+                        />
                       </svg>
-                      {/* Invisible Native Input Overlay */}
                       <input
                         type="date"
                         value={checkIn}
                         onChange={(e) => {
                           setCheckIn(e.target.value);
-                          if (errors.checkIn) setErrors((prev) => ({ ...prev, checkIn: "" }));
+                          if (errors.checkIn)
+                            setErrors((prev) => ({ ...prev, checkIn: "" }));
                         }}
                         className="date-overlay absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       />
                     </div>
-                    {errors.checkIn && <p className="text-red-400 text-xs mt-1">{errors.checkIn}</p>}
+                    {errors.checkIn && (
+                      <p className="text-red-400 text-xs mt-1">
+                        {errors.checkIn}
+                      </p>
+                    )}
                   </div>
 
-                  {/* CHECK-OUT */}
                   <div className="w-1/2 relative group">
-                    <label className="text-xs text-white/70 mb-1 block pl-1">Check Out</label>
-                    <div className={`relative flex items-center w-full px-4 py-2 bg-transparent border rounded-md group-focus-within:border-yellow-400 transition-colors ${errors.checkOut ? 'border-red-500' : 'border-white/30'}`}>
-                      {/* Fake Display Text */}
-                      <span className={`flex-1 ${checkOut ? 'text-white' : 'text-gray-300'}`}>
+                    <label className="text-xs text-white/70 mb-1 block pl-1">
+                      Check Out
+                    </label>
+                    <div
+                      className={`relative flex items-center w-full px-4 py-2 bg-transparent border rounded-md group-focus-within:border-yellow-400 transition-colors ${
+                        errors.checkOut ? "border-red-500" : "border-white/30"
+                      }`}
+                    >
+                      <span
+                        className={`flex-1 ${
+                          checkOut ? "text-white" : "text-gray-300"
+                        }`}
+                      >
                         {checkOut ? formatDate(checkOut) : "DD/MM/YYYY"}
                       </span>
-                      {/* Calendar Icon */}
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-white/70">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-5 text-white/70"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+                        />
                       </svg>
-                      {/* Invisible Native Input Overlay */}
                       <input
                         type="date"
                         value={checkOut}
                         onChange={(e) => {
                           setCheckOut(e.target.value);
-                          if (errors.checkOut) setErrors((prev) => ({ ...prev, checkOut: "" }));
+                          if (errors.checkOut)
+                            setErrors((prev) => ({ ...prev, checkOut: "" }));
                         }}
                         className="date-overlay absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       />
                     </div>
-                    {errors.checkOut && <p className="text-red-400 text-xs mt-1">{errors.checkOut}</p>}
+                    {errors.checkOut && (
+                      <p className="text-red-400 text-xs mt-1">
+                        {errors.checkOut}
+                      </p>
+                    )}
                   </div>
                 </div>
 
-                {/* BUTTON */}
                 <button
                   type="submit"
                   className="w-full cursor-pointer bg-yellow-400 text-black py-2 rounded-md font-semibold hover:bg-yellow-500 transition duration-300 mt-4"
                 >
                   Book Now
                 </button>
-
               </form>
             </div>
           </div>
         </div>
 
-        {/* ANIMATIONS & CUSTOM DATE CSS */}
         <style>
           {`
-            @keyframes slideDown {
-              from { opacity: 0; transform: translateY(-80px); }
-              to { opacity: 1; transform: translateY(0); }
-            }
             @keyframes slideUp {
               from { opacity: 0; transform: translateY(80px); }
               to { opacity: 1; transform: translateY(0); }
             }
-            /* Stretches the clickable area of the date picker over the whole hidden input */
             .date-overlay::-webkit-calendar-picker-indicator {
               position: absolute;
               top: 0;
@@ -372,14 +387,6 @@ const handlePackageChange = (e) => {
             }
           `}
         </style>
-      </div>
-
-      {/* CURVE */}
-      <div className="absolute -bottom-24 left-0 w-full leading-none hidden md:block">
-        <svg viewBox="0 0 1440 100" className="w-full h-[100px]" preserveAspectRatio="none">
-          <path d="M0,60 C480,20 960,20 1440,60 L1440,100 L0,100 Z" fill="#f5f5f5" />
-          <path d="M0,60 C480,20 960,20 1440,60" fill="none" stroke="#facc15" strokeWidth="2" />
-        </svg>
       </div>
     </>
   );

@@ -20,9 +20,14 @@ const Navbar = () => {
          {/*  LOGO */}
       <div className="flex items-center gap-2">
         <MountainIcon />
-        <h1 className="text-white text-xl font-semibold tracking-wide">
-          Forest Stay
-        </h1>
+        <div className="mt-2">
+                <h2 className="text-xl md:text-2xl font-bold tracking-widest uppercase leading-tight text-white">
+                  Forest Stay
+                </h2>
+                <p className="text-[10px] md:text-xs tracking-[0.2em] text-yellow-500 uppercase font-medium">
+                  Camping & Telescope
+                </p>
+              </div>
       </div>
 
         {/* Menu */}

@@ -51,7 +51,7 @@ export default function Footer() {
                   Forest Stay
                 </h2>
                 <p className="text-[10px] md:text-xs tracking-[0.2em] text-yellow-500 uppercase font-medium">
-                  Park & Camping
+                  Camping & Telescope
                 </p>
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function Footer() {
                 Contact Us
               </h3>
               <div className="space-y-2 text-gray-200 text-xs md:text-sm">
-                <p className="leading-snug">Near 12th Hairpin Bend, Yelagiri – 635853</p>
+                <p className="leading-snug">Near 12th Hairpin Bend,<br/> Yelagiri Hills – 635853</p>
                 
                 <a href="mailto:info@foreststay.com" className="flex items-center justify-center md:justify-end gap-2 hover:text-yellow-400 transition-colors">
                   <FaEnvelope className="text-[#4CAF50]" size={12} /> info@foreststay.com
@@ -92,3 +92,18 @@ export default function Footer() {
     </footer>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

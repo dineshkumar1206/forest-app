@@ -5,7 +5,7 @@ const AddOns = () => {
     { title: "Nilavur Cliff View Point", img: "/images/addon2.png", price: "100" },
     { title: "Perumadu Hidden Falls", img: "/images/addon3.png", price: "500" },
     { title: "Swamimalai Trek", img: "/images/addon6.png", price: "500" },
-    { title: "Jungle Safari", img: "/images/addon5.png", price: "1000" },
+    { title: "Jungle Safari", img: "/images/addon.jpg", price: "1000" },
     { title: "Jalagamparai Trek", img: "/images/addon1.png", price: "500" },
     { title: "Adventure Games", img: "/images/addon4.png", price: "500" },
   ];
@@ -69,7 +69,7 @@ const AddOns = () => {
         </div>
 
         {/* ===== GRID ===== */}
-<div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
+<div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
   {addons.map((item, index) => (
     <div
       key={index}
@@ -87,17 +87,17 @@ const AddOns = () => {
         <img
           src={item.img}
           alt={item.title}
-          className="w-full h-32 sm:h-60 md:h-64 object-cover group-hover:scale-105 transition duration-500"
+          className="w-full h-28 sm:h-52 md:h-56 object-cover group-hover:scale-105 transition duration-500"
         />
       </div>
 
       {/* CONTENT AREA */}
-      <div className="p-3 md:p-5">
+      <div className="p-2 md:p-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1">
-          <h3 className="text-sm md:text-xl font-bold text-gray-900 leading-tight">
+          <h3 className="text-xs md:text-lg font-bold text-gray-900 leading-tight">
             {item.title}
           </h3>
-          <span className="text-orange-600 font-bold text-sm md:text-lg">
+          <span className="text-orange-600 font-bold text-xs md:text-lg">
             ₹{item.price}
           </span>
         </div>
