@@ -121,7 +121,7 @@ const Home = () => {
   return (
     <>
       {/* UPDATED: h-screen (100vh) set here */}
-      <div className="relative min-h-screen w-full flex flex-col bg-[#f5f5f5]">
+      <div className="relative min-h-screen w-full flex flex-col  bg-[#f5f5f5]">
         
         {/* Background Image Container - Now pinned to 100% height */}
         <div className="absolute inset-0 w-full h-full">
@@ -136,12 +136,12 @@ const Home = () => {
         <Navbar />
 
         {/* CONTENT - Uses flex-grow to occupy available space within the 100vh container */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between flex-grow max-w-7xl mx-auto px-4 sm:px-6 md:px-14 pt-24 pb-20 md:pt-0 md:pb-0 gap-10 md:gap-0">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between flex-grow max-w-7xl mx-auto px-6 md:px-14 pt-24 pb-20 md:pt-0 md:pb-0 gap-10 md:gap-0">
           
           {/* LEFT CONTENT */}
           <div className="text-white w-full max-w-2xl font-body flex flex-col items-center text-start">
             <h1
-              className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold tracking-[0.5px] leading-snug mb-4 opacity-0 text-left"
+              className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold tracking-[0.5px] leading-snug mb-4 opacity-0 text-left lg:absolute lg:top-34 lg:left-16"
               style={{
                 animation: "slideUp 1s ease forwards",
                 animationDelay: "0.3s",
@@ -168,7 +168,7 @@ const Home = () => {
           {/* RIGHT SIDE FORM */}
           <div
             id="booking-form"
-            className="w-full mt-10 max-w-md mx-auto md:mx-0 opacity-0"
+            className="w-full mt-10 max-w-md opacity-0"
             style={{
               animation: "slideUp 1s ease forwards",
               animationDelay: "0.7s",
