@@ -17,7 +17,7 @@ const Amenities = () => {
     { 
       title: "Scenic Stay", 
       icon: <FaTree />, 
-      description: "Immerse yourself in nature with our picturesque and tranquil forest accommodations." 
+      description: "Wake up to breathtaking panoramic views in our eco-friendly cabins, designed for travelers seeking the ultimate tranquil nature retreat." 
     },
     { 
       title: "Campfire", 
@@ -32,12 +32,12 @@ const Amenities = () => {
     { 
       title: "Telescope", 
       icon: <FaBinoculars />, 
-      description: "Stargaze and explore the clear night sky with our premium telescopes." 
+      description: "Explore the wonders of the universe with our high-powered telescopes, offering crystal-clear views of constellations far from city light pollution." 
     },
     { 
       title: "Trampoline", 
       icon: <MdOutlineSportsTennis />, 
-      description: "Enjoy family-friendly fun and endless outdoor entertainment on our safe trampoline." 
+      description: "Our professional-grade, safe outdoor trampoline provides endless entertainment for kids, making it the perfect highlight for a family-friendly forest getaway." 
     },
     { 
       title: "WiFi", 
