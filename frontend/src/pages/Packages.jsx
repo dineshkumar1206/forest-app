@@ -122,7 +122,7 @@ const Packages = () => {
                   <h3 className="text-lg font-semibold">
                     {item.title}
                   </h3>
-                  <span className="text-orange-500 font-semibold">
+                  <span className="text-orange-500 font-bold">
                     {item.price}
                   </span>
                 </div>

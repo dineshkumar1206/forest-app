@@ -136,27 +136,28 @@ const Home = () => {
         <Navbar />
 
         {/* CONTENT - Uses flex-grow to occupy available space within the 100vh container */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between flex-grow max-w-7xl mx-auto px-6 md:px-14 pt-24 pb-20 md:pt-0 md:pb-0 gap-10 md:gap-0">
-          
-          {/* LEFT CONTENT */}
-          <div className="text-white w-full max-w-2xl font-body flex flex-col items-center text-start">
-            <h1
-              className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold tracking-[0.5px] leading-snug mb-4 opacity-0 text-left lg:absolute lg:top-34 lg:left-16"
-              style={{
-                animation: "slideUp 1s ease forwards",
-                animationDelay: "0.3s",
-              }}
-            >
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between flex-grow 
+        max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 
+        pt-24 lg:pt-6 xl:pt-2 pb-20 md:pb-0 gap-10">
+{/* LEFT SIDE CONTENT - Moved further left on desktop */}
+  <div className="text-white w-full max-w-xl font-body flex flex-col items-start text-left lg:-ml-20 xl:-ml-32">
+<h1
+      className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-[0.5px] leading-snug mb-2 md:mb-3 lg:mb-4 opacity-0 text-left"
+      style={{
+        animation: "slideUp 1s ease forwards",
+        animationDelay: "0.3s",
+      }}
+    >
               YELAGIRI HILLS
             </h1>
 
             <p
-              className="text-gray-200 mb-4 md:mb-6 opacity-0 text-sm md:text-base leading-relaxed text-start lg:-mt-10"
-              style={{
-                animation: "slideUp 1s ease forwards",
-                animationDelay: "0.5s",
-              }}
-            >
+  className="text-gray-200 mb-4 md:mb-6 lg:mb-0 opacity-0 text-sm md:text-base leading-relaxed text-left lg:mt-1"
+  style={{
+    animation: "slideUp 1s ease forwards",
+    animationDelay: "0.5s",
+  }}
+>
               Forest Stay, at Yelagiri is a scenic private forest stay at a
               beautiful sunset viewpoint. Perfect for families and groups, it
               offers campfire, a balcony open-air theatre, and stunning infinity
