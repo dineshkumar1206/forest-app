@@ -16,6 +16,11 @@ const Packages = () => {
       title: "Room Stay",
       price: "₹3000",
       img: "/images/packages-3.jpg",
+    },
+    {
+      title: "Premium Room Stay",
+      price: "₹5000",
+      img: "/images/packages-3.jpg",
     }
     
   ];
@@ -94,7 +99,7 @@ const Packages = () => {
           justify-center clusters them in the middle.
           md:gap-6 reduces the gap on desktop compared to a full-width grid.
         */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 place-items-center">
           {packages.map((item, index) => (
             <div
               key={index}
