@@ -120,10 +120,9 @@ const Home = () => {
 
   return (
     <>
-      {/* UPDATED: h-screen (100vh) set here */}
-      <div className="relative min-h-screen w-full flex flex-col  bg-[#f5f5f5]">
+      <div className="relative min-h-screen w-full flex flex-col bg-[#f5f5f5]">
         
-        {/* Background Image Container - Now pinned to 100% height */}
+        {/* Background Image Container */}
         <div className="absolute inset-0 w-full h-full">
           <img
             src="/images/Homepage-banner.jpg"
@@ -135,29 +134,30 @@ const Home = () => {
 
         <Navbar />
 
-        {/* CONTENT - Uses flex-grow to occupy available space within the 100vh container */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between flex-grow 
+        {/* CONTENT - Changed justify-between to justify-center and increased gap to move items right */}
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-center flex-grow 
         max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 
-        pt-24 lg:pt-6 xl:pt-2 pb-20 md:pb-0 gap-10">
-{/* LEFT SIDE CONTENT - Moved further left on desktop */}
-  <div className="text-white w-full max-w-xl font-body flex flex-col items-start text-left lg:-ml-20 xl:-ml-32">
-<h1
-      className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-[0.5px] leading-snug mb-2 md:mb-3 lg:mb-4 opacity-0 text-left"
-      style={{
-        animation: "slideUp 1s ease forwards",
-        animationDelay: "0.3s",
-      }}
-    >
+        pt-24 lg:pt-6 xl:pt-2 pb-20 md:pb-0 gap-10 lg:gap-24">
+          
+          {/* LEFT SIDE CONTENT - Removed negative margins to shift it more to the right */}
+          <div className="text-white w-full max-w-xl font-body flex flex-col items-start text-left">
+            <h1
+              className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-[0.5px] leading-snug mb-2 md:mb-3 lg:mb-4 opacity-0 text-left"
+              style={{
+                animation: "slideUp 1s ease forwards",
+                animationDelay: "0.3s",
+              }}
+            >
               YELAGIRI HILLS
             </h1>
 
             <p
-  className="text-gray-200 mb-4 md:mb-6 lg:mb-0 opacity-0 text-sm md:text-base leading-relaxed text-left lg:mt-1"
-  style={{
-    animation: "slideUp 1s ease forwards",
-    animationDelay: "0.5s",
-  }}
->
+              className="text-gray-200 mb-4 md:mb-6 lg:mb-0 opacity-0 text-sm md:text-base leading-relaxed text-left lg:mt-1"
+              style={{
+                animation: "slideUp 1s ease forwards",
+                animationDelay: "0.5s",
+              }}
+            >
               Forest Stay, at Yelagiri is a scenic private forest stay at a
               beautiful sunset viewpoint. Perfect for families and groups, it
               offers campfire, a balcony open-air theatre, and stunning infinity
@@ -169,7 +169,7 @@ const Home = () => {
           {/* RIGHT SIDE FORM */}
           <div
             id="booking-form"
-            className="w-full mt-10 max-w-md opacity-0"
+            className="w-full mt-10 max-w-xl opacity-0"
             style={{
               animation: "slideUp 1s ease forwards",
               animationDelay: "0.7s",
@@ -234,13 +234,14 @@ const Home = () => {
 
                 <div>
                   <p className="text-sm mb-3 text-white/80">Select Package</p>
-                  <div className="flex gap-3 flex-wrap">
-                    {["BYOT", "Tent Stay", "Room Stay"].map((pkg) => {
+                  {/* TABS SIZE INCREASED: changed px-3 to px-5 and text-xs to text-sm */}
+                  <div className="flex gap-2 flex-nowrap overflow-x-auto pb-2">
+                    {["BYOT", "Tent Stay", "Room Stay", "British Bunglow"].map((pkg) => {
                       const isSelected = formData.packages === pkg;
                       return (
                         <label
                           key={pkg}
-                          className={`cursor-pointer px-4 py-2 rounded-full border text-sm transition-all duration-300 
+                          className={`cursor-pointer px-5 py-2.5 rounded-full border text-sm font-medium whitespace-nowrap transition-all duration-300 
                           ${
                             isSelected
                               ? "bg-yellow-400 text-black border-yellow-400 shadow-md"
