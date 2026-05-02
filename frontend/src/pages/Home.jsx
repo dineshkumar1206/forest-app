@@ -235,7 +235,7 @@ const Home = () => {
                 <div>
                   <p className="text-sm mb-3 text-white/80">Select Package</p>
                   {/* TABS SIZE INCREASED: changed px-3 to px-5 and text-xs to text-sm */}
-                  <div className="flex gap-2 flex-nowrap overflow-x-auto pb-2">
+                  <div className="flex gap-2 flex-wrap md:flex-nowrap pb-2">
                     {["BYOT", "Tent Stay", "Room Stay", "British Bunglow"].map((pkg) => {
                       const isSelected = formData.packages === pkg;
                       return (
